@@ -2,12 +2,55 @@
   "name": "cy-chat Meme Pack",
   "version": "1.0.0",
   "description": "表情包云端数据 - 图片表情 & 贴图",
-  "updatedAt": "2026-07-11T17:57:47.377Z",
+  "updatedAt": "2026-07-11T18:14:47.494Z",
   "categories": {
     "reactions": {
       "label": "反应表情",
       "description": "日常反应类表情包",
-      "items": []
+      "items": [
+        {
+          "id": "meme_0001",
+          "name": "2YSGdpmjt6EMZPN",
+          "url": "Meme/images/2YSGdpmjt6EMZPN.heif",
+          "tags": []
+        },
+        {
+          "id": "meme_0002",
+          "name": "61de00810ab47d76673a9e0c0ef1763e",
+          "url": "Meme/images/61de00810ab47d76673a9e0c0ef1763e.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0003",
+          "name": "772fcc1a8eb6ef03e89a7dce94645016",
+          "url": "Meme/images/772fcc1a8eb6ef03e89a7dce94645016.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0004",
+          "name": "GgSOQXp4TdZLBo5",
+          "url": "Meme/images/GgSOQXp4TdZLBo5.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0005",
+          "name": "J1",
+          "url": "Meme/images/J1.gif",
+          "tags": []
+        },
+        {
+          "id": "meme_0006",
+          "name": "v2-2bf19e73e2a61551d6bda9dd3ac269ef_r",
+          "url": "Meme/images/v2-2bf19e73e2a61551d6bda9dd3ac269ef_r.png",
+          "tags": []
+        },
+        {
+          "id": "meme_0007",
+          "name": "v2-5e65c882c02cd364a71fe6bf0ab3c383_1440w",
+          "url": "Meme/images/v2-5e65c882c02cd364a71fe6bf0ab3c383_1440w.png",
+          "tags": []
+        }
+      ]
     },
     "emotions": {
       "label": "情绪表情",
