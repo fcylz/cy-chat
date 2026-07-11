@@ -1,0 +1,28 @@
+{
+  "name": "cy-chat Meme Pack",
+  "version": "1.0.0",
+  "description": "表情包云端数据 - 图片表情 & 贴图",
+  "updatedAt": "2026-07-11T17:57:47.377Z",
+  "categories": {
+    "reactions": {
+      "label": "反应表情",
+      "description": "日常反应类表情包",
+      "items": []
+    },
+    "emotions": {
+      "label": "情绪表情",
+      "description": "表达情绪的表情包",
+      "items": []
+    },
+    "interactions": {
+      "label": "互动表情",
+      "description": "社交互动类表情包",
+      "items": []
+    },
+    "stickers": {
+      "label": "贴图",
+      "description": "装饰性贴图",
+      "items": []
+    }
+  }
+}
