@@ -2,7 +2,7 @@
   "name": "cy-chat Meme Pack",
   "version": "1.0.0",
   "description": "表情包云端数据 - 图片表情 & 贴图",
-  "updatedAt": "2026-07-11T18:14:47.494Z",
+  "updatedAt": "2026-07-14T10:05:18.539Z",
   "categories": {
     "reactions": {
       "label": "反应表情",
@@ -48,6 +48,306 @@
           "id": "meme_0007",
           "name": "v2-5e65c882c02cd364a71fe6bf0ab3c383_1440w",
           "url": "Meme/images/v2-5e65c882c02cd364a71fe6bf0ab3c383_1440w.png",
+          "tags": []
+        },
+        {
+          "id": "meme_0008",
+          "name": "0317e64c439bc39660c236a0b479007b",
+          "url": "Meme/images/0317e64c439bc39660c236a0b479007b.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0009",
+          "name": "095fdce50fb3db80166361c44a507f64",
+          "url": "Meme/images/095fdce50fb3db80166361c44a507f64.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0010",
+          "name": "1cb8b9131f801407fed8f6899c438904",
+          "url": "Meme/images/1cb8b9131f801407fed8f6899c438904.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0011",
+          "name": "249b7b7e45f17fbf069865a5a70c0265",
+          "url": "Meme/images/249b7b7e45f17fbf069865a5a70c0265.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0012",
+          "name": "28aa346f19c3ec5a64e4ee9bd640ca18",
+          "url": "Meme/images/28aa346f19c3ec5a64e4ee9bd640ca18.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0013",
+          "name": "2c6fac31bef79713d74cc07c6fe1fd9d",
+          "url": "Meme/images/2c6fac31bef79713d74cc07c6fe1fd9d.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0014",
+          "name": "2eb4f94536ec64e535112805579a1d89",
+          "url": "Meme/images/2eb4f94536ec64e535112805579a1d89.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0015",
+          "name": "2f8ef1cef08a6d6cd61cac9855ffc814",
+          "url": "Meme/images/2f8ef1cef08a6d6cd61cac9855ffc814.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0016",
+          "name": "350635132387209f8168991016d60b89",
+          "url": "Meme/images/350635132387209f8168991016d60b89.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0017",
+          "name": "3adfc0d245ae57f6ff7019d2563aa5cd",
+          "url": "Meme/images/3adfc0d245ae57f6ff7019d2563aa5cd.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0018",
+          "name": "431029bc73d2664f242167802be5cbd9",
+          "url": "Meme/images/431029bc73d2664f242167802be5cbd9.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0019",
+          "name": "507d90b3d99a60a5354cbfb96fecf77c",
+          "url": "Meme/images/507d90b3d99a60a5354cbfb96fecf77c.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0020",
+          "name": "516dcfc2fad313aaa57387a904b67101",
+          "url": "Meme/images/516dcfc2fad313aaa57387a904b67101.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0021",
+          "name": "5e0abb93968efaa8278df492a0ea7831",
+          "url": "Meme/images/5e0abb93968efaa8278df492a0ea7831.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0022",
+          "name": "627c190f3925a8d229fd0b6314cda465",
+          "url": "Meme/images/627c190f3925a8d229fd0b6314cda465.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0023",
+          "name": "645fc23a1c65f81cea0ec937fb4e2a02",
+          "url": "Meme/images/645fc23a1c65f81cea0ec937fb4e2a02.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0024",
+          "name": "66d2bc7c4b3725980a6b1cd3096fcb64",
+          "url": "Meme/images/66d2bc7c4b3725980a6b1cd3096fcb64.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0025",
+          "name": "6b32ae9e396208bc96d8c9f50176c55d",
+          "url": "Meme/images/6b32ae9e396208bc96d8c9f50176c55d.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0026",
+          "name": "6d7beda1ee845d11e8771519eb79a39c",
+          "url": "Meme/images/6d7beda1ee845d11e8771519eb79a39c.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0027",
+          "name": "6fde0f9c4fc52d4501d114a8244bda19",
+          "url": "Meme/images/6fde0f9c4fc52d4501d114a8244bda19.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0028",
+          "name": "7435ca2e2200cbaa84bc6b7cb98dbc5a",
+          "url": "Meme/images/7435ca2e2200cbaa84bc6b7cb98dbc5a.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0029",
+          "name": "7b6b8d2e59a04824323ab1610fa8f84f",
+          "url": "Meme/images/7b6b8d2e59a04824323ab1610fa8f84f.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0030",
+          "name": "8315454ff03ddc56020d787652239ad2",
+          "url": "Meme/images/8315454ff03ddc56020d787652239ad2.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0031",
+          "name": "9556765ee744206e37da84f6dd58621e",
+          "url": "Meme/images/9556765ee744206e37da84f6dd58621e.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0032",
+          "name": "965ca476f12a86b863074305cc6d8118",
+          "url": "Meme/images/965ca476f12a86b863074305cc6d8118.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0033",
+          "name": "966939922c8d3bfd9b35589f79864c51",
+          "url": "Meme/images/966939922c8d3bfd9b35589f79864c51.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0034",
+          "name": "97c4da296676b01c10da39fff654b7d4",
+          "url": "Meme/images/97c4da296676b01c10da39fff654b7d4.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0035",
+          "name": "9911c7267c15ec8b1b78f37dbb5c6950",
+          "url": "Meme/images/9911c7267c15ec8b1b78f37dbb5c6950.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0036",
+          "name": "9d49b3257e2c50011d9beed21cec840a",
+          "url": "Meme/images/9d49b3257e2c50011d9beed21cec840a.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0037",
+          "name": "a417ef3433f18f911edc7a48e6e01c70",
+          "url": "Meme/images/a417ef3433f18f911edc7a48e6e01c70.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0038",
+          "name": "a6765358f6a5270d1404add0bc442af1",
+          "url": "Meme/images/a6765358f6a5270d1404add0bc442af1.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0039",
+          "name": "a9fc896f2f10f42f1d68457d90b98d37",
+          "url": "Meme/images/a9fc896f2f10f42f1d68457d90b98d37.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0040",
+          "name": "b3c07712eb0e87cc418bf5ce0285e81c",
+          "url": "Meme/images/b3c07712eb0e87cc418bf5ce0285e81c.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0041",
+          "name": "b7052d5a8005eecb591e18e4587ed740",
+          "url": "Meme/images/b7052d5a8005eecb591e18e4587ed740.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0042",
+          "name": "b7bc96cfc4168ec76fd9c56a3b83d9a0",
+          "url": "Meme/images/b7bc96cfc4168ec76fd9c56a3b83d9a0.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0043",
+          "name": "c0c244ad4c0028d16bc084aaf5002b56",
+          "url": "Meme/images/c0c244ad4c0028d16bc084aaf5002b56.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0044",
+          "name": "ca2f100e5efc75911fb192f52aeeb350",
+          "url": "Meme/images/ca2f100e5efc75911fb192f52aeeb350.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0045",
+          "name": "df1f3bbd6d04901f4a027e98a82ebd28",
+          "url": "Meme/images/df1f3bbd6d04901f4a027e98a82ebd28.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0046",
+          "name": "e1e4d16d71c4b2434232f9e724e70703",
+          "url": "Meme/images/e1e4d16d71c4b2434232f9e724e70703.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0047",
+          "name": "e61c780446f3ec9d7e9c22fbbd6de9c5",
+          "url": "Meme/images/e61c780446f3ec9d7e9c22fbbd6de9c5.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0048",
+          "name": "e79a52a06fe0d72515b5a4b52b46affa",
+          "url": "Meme/images/e79a52a06fe0d72515b5a4b52b46affa.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0049",
+          "name": "ed83be1b3704acebc443fb6412e8af01",
+          "url": "Meme/images/ed83be1b3704acebc443fb6412e8af01.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0050",
+          "name": "f311b3e0f671a92eb927078f3647e3d7",
+          "url": "Meme/images/f311b3e0f671a92eb927078f3647e3d7.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0051",
+          "name": "f71c8929c1f0c24412bd320301e4cfe4",
+          "url": "Meme/images/f71c8929c1f0c24412bd320301e4cfe4.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0052",
+          "name": "f91a5aa8ff1899b33458ecddea782963",
+          "url": "Meme/images/f91a5aa8ff1899b33458ecddea782963.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0053",
+          "name": "f91b6462ec561450427f9c5689261ef1",
+          "url": "Meme/images/f91b6462ec561450427f9c5689261ef1.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0054",
+          "name": "fc160b88a9f555616a2ec4db1e246238",
+          "url": "Meme/images/fc160b88a9f555616a2ec4db1e246238.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0055",
+          "name": "fcb5ab3dc69d2712dd58c86a3c88e816",
+          "url": "Meme/images/fcb5ab3dc69d2712dd58c86a3c88e816.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0056",
+          "name": "fd66a743a69854a9495671afa498051e",
+          "url": "Meme/images/fd66a743a69854a9495671afa498051e.jpg",
+          "tags": []
+        },
+        {
+          "id": "meme_0057",
+          "name": "fd7678a255fa5b13b902a11b2861d65a",
+          "url": "Meme/images/fd7678a255fa5b13b902a11b2861d65a.jpg",
           "tags": []
         }
       ]
