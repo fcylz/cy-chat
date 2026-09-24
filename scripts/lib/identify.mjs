@@ -75,6 +75,86 @@ export const WORD_CATEGORIES = {
   statuses: { label: '状态', description: '状态文案' },
 };
 
+/* ------------------------------------------------------------------ *
+ * 动态分类（目录名即分类，不写死白名单）
+ * ------------------------------------------------------------------ */
+
+/**
+ * 上面两张表只是「已知分类」，用来提供中文标签和固定 ID 前缀。
+ * 真正合法的分类是**磁盘上实际存在的文件夹名**——用户新建一个目录就是新建一个分类，
+ * 不需要改任何代码。所以分类校验只做「能不能安全当目录名」这一件事。
+ */
+
+/** 每个分类键对应一个显示标签：已知分类用中文标签，动态分类直接用目录名 */
+export function categoryLabel(key) {
+  return MEME_CATEGORIES[key]?.label || WORD_CATEGORIES[key]?.label || key;
+}
+
+/** 分类描述：已知分类用预设文案，动态分类标明来源 */
+export const categoryDescription = (key, source = 'meme') => {
+  const known = (source === 'word' ? WORD_CATEGORIES : MEME_CATEGORIES)[key];
+  return known?.description || `自动发现的分类（${source === 'word' ? '文件名' : '目录名'}即分类）`;
+};
+
+/**
+ * 分类键安全校验：它最终会变成一层目录名，必须挡掉路径穿越和非法字符。
+ * 允许中文等多字节字符（目录名就是给用户看的），只禁真正危险的东西。
+ * @returns {string|null} 规范化后的分类键，不合法则 null
+ */
+export function sanitizeCategory(raw) {
+  const s = String(raw ?? '').trim();
+  if (!s) return null;
+  if (s.length > 40) return null;
+  // 控制字符 / Windows 保留字符 / 路径分隔符 一律拒绝；前后点也拒绝（挡掉 . .. .git）
+  if (/[\u0000-\u001f\\/:*?"<>|]/.test(s)) return null;
+  if (s.startsWith('.')) return null;
+  if (s === '..' || s === '.') return null;
+  return s;
+}
+
+/** 把若干候选分类键合并成有序列表：已知分类按声明顺序在前，动态分类按字典序在后 */
+export function mergeCategoryKeys(known, candidates) {
+  const knownKeys = Object.keys(known);
+  const seen = new Set(knownKeys);
+  const extra = [];
+  for (const raw of candidates) {
+    const key = sanitizeCategory(raw);
+    if (!key || seen.has(key)) continue;
+    seen.add(key);
+    extra.push(key);
+  }
+  extra.sort((a, b) => a.localeCompare(b, 'en'));
+  return [...knownKeys, ...extra];
+}
+
+/** 字卡已知分类的固定 ID 前缀（必须保持不变，否则已发出的 ID 会漂移） */
+export const WORD_ID_PREFIX = { customReplies: 'reply', pokes: 'poke', statuses: 'status' };
+
+/**
+ * 为每个字卡分类分配 ID 前缀：已知分类沿用固定前缀，动态分类由分类名推导。
+ * 推导可能撞车（`hi-2024` 与 `hi2024` 都是 `hi2024`），所以全局去重后加序号，
+ * 保证不同分类不会产出相同 ID。
+ */
+export function wordIdPrefixes(keys) {
+  const out = {};
+  const used = new Set();
+  for (const k of keys) {
+    if (!WORD_ID_PREFIX[k]) continue;
+    out[k] = WORD_ID_PREFIX[k];
+    used.add(WORD_ID_PREFIX[k]);
+  }
+  for (const k of keys) {
+    if (out[k]) continue;
+    const base = String(k).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12) || 'word';
+    let prefix = base;
+    let n = 2;
+    while (used.has(prefix)) prefix = `${base}${n++}`;
+    used.add(prefix);
+    out[k] = prefix;
+  }
+  return out;
+}
+
 /** 扫描时需要跳过的系统垃圾文件 */
 const IGNORED_NAMES = new Set(['.ds_store', 'thumbs.db', 'desktop.ini', '.gitkeep', '.gitattributes']);
 

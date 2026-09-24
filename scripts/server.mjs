@@ -31,7 +31,7 @@ import { execFileSync } from 'node:child_process';
 
 import {
   IMAGE_TYPES, EXT_BY_TYPE, EXT_ALIASES, MEME_CATEGORIES, WORD_CATEGORIES,
-  sniffImageType, readImageSize, sha1, safeFileName, baseName,
+  sniffImageType, readImageSize, sha1, safeFileName, baseName, sanitizeCategory,
 } from './lib/identify.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -180,9 +180,11 @@ async function handleMeme(req, res, url) {
     throw new HttpError(400, `不是有效图片：文件头识别为 ${type}。支持 ${IMAGE_TYPES.join(' / ')}`);
   }
 
-  const category = url.searchParams.get('category') || 'reactions';
-  if (!MEME_CATEGORIES[category]) {
-    throw new HttpError(400, `未知分类 "${category}"，可用：${Object.keys(MEME_CATEGORIES).join(' / ')}`);
+  // 分类不再是白名单：传什么分类名就建什么目录（目录名即分类）。
+  // 只校验它能不能安全地当目录名——挡掉路径穿越和控制字符。
+  const category = sanitizeCategory(url.searchParams.get('category') || 'reactions');
+  if (!category) {
+    throw new HttpError(400, `分类名不合法，不能作为目录名使用（禁含 / \\ : * ? " < > | 和控制字符，不能以点开头，长度 ≤ 40）`);
   }
 
   // 文件名：按真实类型对齐扩展名
@@ -239,9 +241,10 @@ async function handleWord(req, res, url) {
   const lines = raw.split(/\r?\n/).map((l) => l.trim()).filter((l) => l && !l.startsWith('#'));
   if (!lines.length) throw new HttpError(400, '没有可用的文本行（空行和 # 开头的注释会被忽略）');
 
-  const category = url.searchParams.get('category') || 'customReplies';
-  if (!WORD_CATEGORIES[category]) {
-    throw new HttpError(400, `未知分类 "${category}"，可用：${Object.keys(WORD_CATEGORIES).join(' / ')}`);
+  // 分类不再是白名单：分类名就是 Word/words/<分类名>.txt 的文件名。
+  const category = sanitizeCategory(url.searchParams.get('category') || 'customReplies');
+  if (!category) {
+    throw new HttpError(400, `分类名不合法，不能作为文件名使用（禁含 / \\ : * ? " < > | 和控制字符，不能以点开头，长度 ≤ 40）`);
   }
 
   const dir = path.join(REPO_DIR, 'Word/words');
@@ -302,7 +305,9 @@ const server = http.createServer(async (req, res) => {
         repo: REPO_DIR,
         autoPush: AUTO_PUSH,
         authRequired: Boolean(TOKEN),
-        categories: { meme: Object.keys(MEME_CATEGORIES), word: Object.keys(WORD_CATEGORIES) },
+        // 分类是动态的：传什么分类名就建什么目录/文件，这里只列出预设分类作为参考
+        categoriesAreDynamic: true,
+        presetCategories: { meme: Object.keys(MEME_CATEGORIES), word: Object.keys(WORD_CATEGORIES) },
         maxUploadMB: MAX_BYTES / 1024 / 1024,
       });
     }
@@ -312,8 +317,8 @@ const server = http.createServer(async (req, res) => {
         name: 'cy-chat upload API',
         endpoints: {
           'GET /health': '健康检查',
-          'POST /upload/meme?name=x.jpg&category=reactions': '上传表情包，body 为文件原始字节',
-          'POST /upload/word?category=customReplies': '上传字卡，body 为纯文本、每行一条',
+          'POST /upload/meme?name=x.jpg&category=reactions': '上传表情包，body 为文件原始字节；category 可为任意合法目录名',
+          'POST /upload/word?category=greetings': '上传字卡，body 为纯文本、每行一条；category 即 Word/words/<category>.txt 的文件名',
         },
       });
     }

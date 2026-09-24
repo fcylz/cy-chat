@@ -12,8 +12,9 @@
  *   node scripts/sync-index.mjs --json           # 额外输出机器可读报告
  *
  * 设计要点：
- *   Meme 侧 = 镜像式。图片文件本身是权威，索引向磁盘看齐（会清理孤儿条目）。
+ *   Meme 侧 = 镜像式。图片文件本身是权威，索引向磁盘看齐（会清理孤儿条目和空分类）。
  *   Word 侧 = 追加式。文字没有实体文件承载，索引是权威，脚本只增不删。
+ *   分类     = 动态的。目录名 / 文件名即分类，不写死白名单——新增分类不用改代码。
  */
 
 import fs from 'node:fs';
@@ -24,6 +25,7 @@ import {
   IMAGE_TYPES, EXT_BY_TYPE, WEB_SAFE_TYPES, MEME_CATEGORIES, WORD_CATEGORIES,
   sniffImageType, readImageSize, sha1, walkFiles, categoryFromPath,
   isExtensionAcceptable, baseName, idNumber, formatId,
+  mergeCategoryKeys, categoryLabel, categoryDescription, wordIdPrefixes,
 } from './lib/identify.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
@@ -44,9 +46,9 @@ const OPT = {
   root: (argv.find((a) => a.startsWith('--root=')) || '').split('=')[1] || REPO_ROOT,
 };
 
-if (!Object.keys(MEME_CATEGORIES).includes(OPT.defaultCategory)) {
-  console.error(`✖ --default-category 必须是 ${Object.keys(MEME_CATEGORIES).join(' / ')} 之一`);
-  process.exit(2);
+// 分类不再是白名单：任何合法的目录名都是分类。这里只提示一下拼写是否偏离预设。
+if (!MEME_CATEGORIES[OPT.defaultCategory]) {
+  console.error(`⚠ --default-category="${OPT.defaultCategory}" 不是预设分类，将按动态分类处理`);
 }
 
 /* ------------------------------------------------------------------ *
@@ -56,8 +58,8 @@ if (!Object.keys(MEME_CATEGORIES).includes(OPT.defaultCategory)) {
 const report = {
   mode: OPT.write ? 'write' : 'dry-run',
   startedAt: new Date().toISOString(),
-  meme: { scanned: 0, valid: 0, added: 0, kept: 0, moved: 0, removedOrphans: 0, duplicates: [], formatWarnings: [], failed: [] },
-  word: { files: 0, added: 0, kept: 0 },
+  meme: { scanned: 0, valid: 0, added: 0, kept: 0, moved: 0, removedOrphans: 0, duplicates: [], formatWarnings: [], failed: [], discovered: [] },
+  word: { files: 0, added: 0, kept: 0, discovered: [] },
   warnings: [],
   errors: [],
   operations: [],
@@ -126,9 +128,26 @@ const byPath = (a, b) => a.localeCompare(b, 'en');
 
 function syncMeme() {
   const old = loadJson(MEME_JSON) || { categories: {} };
-  const validKeys = Object.keys(MEME_CATEGORIES);
 
-  // ---- 1. 建立旧条目索引：basename -> item（url 和 id 都要变，文件名是唯一稳定锚点）
+  // ---- 1. 扫描 + 发现分类
+  // 分类不再来自写死的白名单：磁盘上出现过的文件夹名就是合法分类。
+  // 用户要在网页上新建一个分类，直接建目录丢图就行，不用改代码。
+  const relPaths = walkFiles(IMAGES_DIR).sort(byPath);
+  report.meme.scanned = relPaths.length;
+
+  const diskCats = [];
+  for (const rel of relPaths) {
+    const i = rel.indexOf('/');
+    if (i > 0) diskCats.push(rel.slice(0, i));   // 只取第一层目录；根目录平铺文件不算分类
+  }
+  const validKeys = mergeCategoryKeys(MEME_CATEGORIES, [
+    ...diskCats,                                  // 磁盘上实际存在的分类目录
+    ...Object.keys(old.categories || {}),         // 索引里已有的（含只有 .gitkeep 的空目录）
+  ]);
+  const presetKeys = Object.keys(MEME_CATEGORIES);
+  report.meme.discovered = validKeys.filter((k) => !presetKeys.includes(k));
+
+  // ---- 2. 建立旧条目索引：basename -> item（url 和 id 都要变，文件名是唯一稳定锚点）
   const oldByBase = new Map();
   for (const [cat, group] of Object.entries(old.categories || {})) {
     for (const item of group.items || []) {
@@ -136,10 +155,6 @@ function syncMeme() {
       oldByBase.set(baseName(item.url), { ...item, __oldCat: cat });
     }
   }
-
-  // ---- 2. 扫描 + 识别
-  const relPaths = walkFiles(IMAGES_DIR).sort(byPath);
-  report.meme.scanned = relPaths.length;
 
   const seen = [];          // 识别成功的文件
   for (const rel of relPaths) {
@@ -254,8 +269,8 @@ function syncMeme() {
 
   if (looseFiles.length) {
     warn(
-      `Meme/images/ 根目录下有 ${looseFiles.length} 个文件未放入分类子目录，已按默认策略归入 "${OPT.defaultCategory}"。` +
-      `建议以后直接放到 Meme/images/{${validKeys.join('|')}}/ 下，路径即分类。` +
+      `Meme/images/ 根目录下有 ${looseFiles.length} 个文件没有放进分类子目录，已归入默认分类 "${OPT.defaultCategory}"。` +
+      `想让某个文件自成一类，把「它所在的文件夹名」当成分类名即可（目录名即分类，不需要改代码）。` +
       (looseFiles.length <= 3 ? ` 涉及: ${looseFiles.join(', ')}` : '')
     );
   }
@@ -283,21 +298,13 @@ function syncMeme() {
   // ---- 6. 组装新索引
   const categories = {};
   for (const key of validKeys) {
-    const meta = MEME_CATEGORIES[key];
-    // 保留原文件中已有的 label/description 覆盖
     const prev = old.categories?.[key] || {};
+    // 保留原文件中已有的 label/description，其次是预设中文标签，最后退回目录名
     categories[key] = {
-      label: prev.label || meta.label,
-      description: prev.description || meta.description,
+      label: prev.label || categoryLabel(key),
+      description: prev.description || categoryDescription(key, 'meme'),
       items: [],
     };
-  }
-  // 保持老文件里出现过、但已不在标准分类表中的分类（避免静默丢数据）
-  for (const [key, group] of Object.entries(old.categories || {})) {
-    if (!categories[key]) {
-      categories[key] = { ...group, items: [] };
-      warn(`保留非标准分类 "${key}"（未在 MEME_CATEGORIES 中定义）`);
-    }
   }
 
   for (const p of planned.sort((a, b) => idNumber(a.id) - idNumber(b.id))) {
@@ -316,6 +323,18 @@ function syncMeme() {
   }
   report.meme.kept = planned.filter((p) => oldByBase.has(baseName(p.rel))).length;
   report.meme.added = planned.length - report.meme.kept;
+
+  // 镜像语义收尾：目录没了、条目也空了的「动态分类」直接清掉，避免拼错一次就永久留在索引里。
+  // 预设分类是固定槽位，即使为空也保留（客户端可以据此展示「还没有内容」的空分类）。
+  const emptied = [];
+  for (const key of Object.keys(categories)) {
+    if (presetKeys.includes(key)) continue;
+    if (categories[key].items.length === 0) { emptied.push(key); delete categories[key]; }
+  }
+  if (emptied.length) {
+    warn(`清理空分类: ${emptied.join(', ')}（目录已不存在且没有条目；重新放文件进去就会自动回来）`);
+  }
+  report.meme.discovered = Object.keys(categories).filter((k) => !presetKeys.includes(k));
 
   // ---- 7. 孤儿条目（索引里有、磁盘上没有）
   const droppedRel = new Set(report.meme.duplicates.flatMap((d) => d.dropped));
@@ -349,17 +368,23 @@ function syncWord() {
   const files = walkFiles(WORDS_DIR).filter((f) => /\.txt$/i.test(f)).sort(byPath);
   report.word.files = files.length;
 
+  // ---- 1. 发现分类：Word/words/<文件名>.txt 的文件名就是分类名
+  // 新建 greetings.txt 就等于新建了 greetings 分类，索引里会自动出现。
+  const validKeys = mergeCategoryKeys(WORD_CATEGORIES, [
+    ...files.map((f) => baseName(f)),
+    ...Object.keys(old.categories || {}),
+  ]);
+  const presetKeys = Object.keys(WORD_CATEGORIES);
+  report.word.discovered = validKeys.filter((k) => !presetKeys.includes(k));
+
   const categories = {};
-  for (const [key, meta] of Object.entries(WORD_CATEGORIES)) {
+  for (const key of validKeys) {
     const prev = old.categories?.[key] || {};
     categories[key] = {
-      label: prev.label || meta.label,
-      description: prev.description || meta.description,
+      label: prev.label || categoryLabel(key),
+      description: prev.description || categoryDescription(key, 'word'),
       items: [...(prev.items || [])],
     };
-  }
-  for (const [key, group] of Object.entries(old.categories || {})) {
-    if (!categories[key]) categories[key] = group;
   }
   report.word.kept = Object.values(categories).reduce((n, g) => n + g.items.length, 0);
 
@@ -372,9 +397,10 @@ function syncWord() {
     }
   }
 
-  const prefixByCat = { customReplies: 'reply', pokes: 'poke', statuses: 'status' };
+  // ---- 2. ID 前缀：预设分类沿用固定前缀（改了会让已发出的 ID 漂移），动态分类由分类名推导
+  const prefixByCat = wordIdPrefixes(validKeys);
   const nextNum = {};
-  for (const [cat, pre] of Object.entries(prefixByCat)) {
+  for (const cat of validKeys) {
     let max = 0;
     for (const it of categories[cat].items) max = Math.max(max, idNumber(it.id));
     nextNum[cat] = max;
@@ -382,10 +408,10 @@ function syncWord() {
 
   for (const rel of files) {
     const raw = fs.readFileSync(path.join(WORDS_DIR, rel), 'utf8');
-    const key = baseName(rel);
-    const category = Object.keys(WORD_CATEGORIES).includes(key) ? key : 'customReplies';
-    if (category === 'customReplies' && key !== 'customReplies') {
-      warn(`字卡文件 ${rel} 未匹配到分类名，内容全部归入 customReplies（可用 customReplies.txt / pokes.txt / statuses.txt 指定分类）`);
+    const srcKey = baseName(rel);
+    const category = validKeys.includes(srcKey) ? srcKey : 'customReplies';
+    if (category !== srcKey) {
+      warn(`字卡文件名 "${srcKey}" 不是合法分类名，内容归入 customReplies（文件名即分类，例如 greetings.txt 就是一个 greetings 分类）`);
     }
 
     const lines = raw
@@ -476,11 +502,13 @@ function main() {
   L.push(`  清理孤儿条目    ${m.removedOrphans}`);
   L.push(`  内容重复        ${m.duplicates.length} 组 / ${m.duplicates.reduce((n, d) => n + d.dropped.length, 0)} 个冗余文件`);
   L.push(`  格式兼容告警    ${m.formatWarnings.length}`);
+  if (m.discovered.length) L.push(`  ★ 新发现的分类  ${m.discovered.join(', ')}`);
   L.push('');
   L.push('【Word 字卡】');
   L.push(`  扫描 txt        ${report.word.files}`);
   L.push(`  新增条目        ${report.word.added}`);
   L.push(`  现有条目        ${report.word.kept}`);
+  if (report.word.discovered.length) L.push(`  ★ 新发现的分类  ${report.word.discovered.join(', ')}`);
   L.push('');
 
   if (report.errors.length) {

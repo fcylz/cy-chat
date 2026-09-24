@@ -1,11 +1,19 @@
 name: Sync Index
 
-# 任何人往仓库里放文件（GitHub 网页上传 / git push），索引自动跟着更新。
-# 流水线：读文件头判真实类型 -> 校验扩展名 -> 内容去重 -> 分类归位 -> 分配 ID -> 重建 JSON。
+# 往仓库里放文件（GitHub 网页拖拽上传 / git push），索引自动跟着更新。
+# 触发方式三选一：
+#   1. push        —— 任何人提交后立刻跑
+#   2. 手动        —— Actions 页面点 Run workflow
+#   3. 每小时兜底   —— 就算前两条都没生效，最多一小时也会自动扫一遍
+# 扫描范围：Meme/images/**（目录名即分类）和 Word/words/*.txt（文件名即分类）。
+# 新增分类不用改代码：建个目录 / 建个 txt，索引里就会自动出现这个分类。
 
 on:
   push:
   workflow_dispatch:
+  schedule:
+    # 每小时整点（UTC，分钟数与北京时间一致）
+    - cron: '0 * * * *'
 
 # 同一时刻只跑一个索引任务，避免两次提交互相覆盖
 concurrency:
@@ -18,8 +26,9 @@ permissions:
 jobs:
   sync:
     runs-on: ubuntu-latest
-    # 机器人自己的提交不再触发，避免死循环
-    if: github.actor != 'github-actions[bot]'
+    # 机器人自己的提交不再触发，避免死循环。
+    # 注意：定时任务必须放行，所以这层判断只对 push 事件生效。
+    if: github.event_name != 'push' || github.actor != 'github-actions[bot]'
     steps:
       - name: 检出仓库
         uses: actions/checkout@v4
@@ -29,7 +38,7 @@ jobs:
         with:
           node-version: '20'
 
-      - name: 同步索引
+      - name: 扫描并同步索引
         run: node scripts/sync-index.mjs --write
 
       - name: 提交变更
