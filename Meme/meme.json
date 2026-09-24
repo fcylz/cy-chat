@@ -2,7 +2,7 @@
   "name": "cy-chat Meme Pack",
   "version": "2.0.0",
   "description": "表情包云端数据 - 图片表情 & 贴图",
-  "updatedAt": "2026-09-24T19:08:53.789Z",
+  "updatedAt": "2026-09-24T19:10:15.963Z",
   "generatedBy": "scripts/sync-index.mjs",
   "categories": {
     "reactions": {
@@ -805,32 +805,6 @@
       "label": "贴图",
       "description": "装饰性贴图",
       "items": []
-    },
-    "斗图": {
-      "label": "斗图",
-      "description": "自动发现的分类（目录名即分类）",
-      "items": [
-        {
-          "id": "meme_0080",
-          "name": "新分类验证A",
-          "url": "Meme/images/斗图/新分类验证A.png",
-          "tags": [],
-          "width": 240,
-          "height": 180,
-          "bytes": 561,
-          "format": "png"
-        },
-        {
-          "id": "meme_0081",
-          "name": "新分类验证B",
-          "url": "Meme/images/斗图/新分类验证B.png",
-          "tags": [],
-          "width": 180,
-          "height": 240,
-          "bytes": 629,
-          "format": "png"
-        }
-      ]
     }
   }
 }
