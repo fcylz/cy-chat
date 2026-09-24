@@ -375,7 +375,6 @@ function syncWord() {
     ...Object.keys(old.categories || {}),
   ]);
   const presetKeys = Object.keys(WORD_CATEGORIES);
-  report.word.discovered = validKeys.filter((k) => !presetKeys.includes(k));
 
   const categories = {};
   for (const key of validKeys) {
@@ -386,6 +385,25 @@ function syncWord() {
       items: [...(prev.items || [])],
     };
   }
+
+  // 分类层走镜像、条目层走追加，两层规则分开：
+  //   · 条目层只增不删 —— 文本没有实体承载，手误删一行不该把已发出的字卡弄丢。
+  //   · 分类层跟着文件走 —— 动态分类的 <分类>.txt 删了，这个分类就该消失，
+  //     否则用户永远清不掉它。预设的三分类例外（保护历史数据），保持只增不删。
+  const fileKeys = new Set(files.map((f) => baseName(f)));
+  const pruned = [];
+  for (const key of Object.keys(categories)) {
+    if (presetKeys.includes(key) || fileKeys.has(key)) continue;
+    pruned.push(`${key}(${categories[key].items.length} 条)`);
+    delete categories[key];
+  }
+  if (pruned.length) {
+    warn(
+      `回收字卡分类: ${pruned.join(', ')} —— 对应的 Word/words/<分类>.txt 已不存在。` +
+      `文本仍在本仓库的 git 历史里，把文件加回来就能恢复。`
+    );
+  }
+  report.word.discovered = Object.keys(categories).filter((k) => !presetKeys.includes(k));
   report.word.kept = Object.values(categories).reduce((n, g) => n + g.items.length, 0);
 
   // 没有字卡源文件时也不用提前返回：走同一条路径，保证 generatedBy 等字段始终一致
@@ -398,9 +416,11 @@ function syncWord() {
   }
 
   // ---- 2. ID 前缀：预设分类沿用固定前缀（改了会让已发出的 ID 漂移），动态分类由分类名推导
-  const prefixByCat = wordIdPrefixes(validKeys);
+  // 用 categories 的键而不是 validKeys —— 上一步可能已经回收掉若干分类
+  const liveKeys = Object.keys(categories);
+  const prefixByCat = wordIdPrefixes(liveKeys);
   const nextNum = {};
-  for (const cat of validKeys) {
+  for (const cat of liveKeys) {
     let max = 0;
     for (const it of categories[cat].items) max = Math.max(max, idNumber(it.id));
     nextNum[cat] = max;
@@ -409,7 +429,7 @@ function syncWord() {
   for (const rel of files) {
     const raw = fs.readFileSync(path.join(WORDS_DIR, rel), 'utf8');
     const srcKey = baseName(rel);
-    const category = validKeys.includes(srcKey) ? srcKey : 'customReplies';
+    const category = liveKeys.includes(srcKey) ? srcKey : 'customReplies';
     if (category !== srcKey) {
       warn(`字卡文件名 "${srcKey}" 不是合法分类名，内容归入 customReplies（文件名即分类，例如 greetings.txt 就是一个 greetings 分类）`);
     }
