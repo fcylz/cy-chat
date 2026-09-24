@@ -1,11 +1,10 @@
 name: Sync Index
 
 # 往仓库里丢文件（GitHub 网页拖拽上传 / git push），索引自动跟着更新。
-# 不写代码、不调模型，纯机械识别：真实类型 -> 校验 -> 去重 -> 分类归位 -> 分配 ID -> 重建 JSON。
+# 纯机械识别：真实类型 -> 校验 -> 去重 -> 分类归位 -> 分配 ID -> 重建 JSON。
 
 on:
   push:
-    branches: [main, master]
     paths:
       - 'Meme/images/**'
       - 'Word/words/**'
@@ -14,18 +13,11 @@ on:
 permissions:
   contents: write
 
-# 同一分支上的同步任务排队执行，避免两个 job 同时改 JSON 造成冲突
-concurrency:
-  group: sync-index-${{ github.ref }}
-  cancel-in-progress: false
-
 jobs:
   sync:
     runs-on: ubuntu-latest
-    # 机器人自己的提交不再触发，配合 paths 过滤形成双保险，杜绝回环
-    if: >-
-      github.actor != 'github-actions[bot]' &&
-      !contains(github.event.head_commit.message, '[skip-sync]')
+    # 机器人自己的提交不再触发，避免死循环
+    if: github.actor != 'github-actions[bot]'
     steps:
       - name: 检出仓库
         uses: actions/checkout@v4
@@ -40,7 +32,6 @@ jobs:
 
       - name: 提交变更
         run: |
-          set -e
           git config user.name  "cy-chat-bot"
           git config user.email "cy-chat-bot@users.noreply.github.com"
           if [ -z "$(git status --porcelain)" ]; then
