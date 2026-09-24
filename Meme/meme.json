@@ -2,7 +2,7 @@
   "name": "cy-chat Meme Pack",
   "version": "2.0.0",
   "description": "表情包云端数据 - 图片表情 & 贴图",
-  "updatedAt": "2026-09-24T17:54:20.065Z",
+  "updatedAt": "2026-09-24T18:50:54.890Z",
   "generatedBy": "scripts/sync-index.mjs",
   "categories": {
     "reactions": {
@@ -804,7 +804,18 @@
     "stickers": {
       "label": "贴图",
       "description": "装饰性贴图",
-      "items": []
+      "items": [
+        {
+          "id": "meme_0080",
+          "name": "自动同步验证",
+          "url": "Meme/images/stickers/自动同步验证.png",
+          "tags": [],
+          "width": 300,
+          "height": 300,
+          "bytes": 137132,
+          "format": "png"
+        }
+      ]
     }
   }
 }
