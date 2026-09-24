@@ -2,7 +2,7 @@
   "name": "cy-chat Word Cards",
   "version": "1.0.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-09-24T19:08:53.793Z",
+  "updatedAt": "2026-09-24T19:15:55.291Z",
   "categories": {
     "customReplies": {
       "label": "自定义回复",
@@ -7624,27 +7624,6 @@
       "label": "状态",
       "description": "自定义状态文案",
       "items": []
-    },
-    "greetings": {
-      "label": "greetings",
-      "description": "自动发现的分类（文件名即分类）",
-      "items": [
-        {
-          "id": "greetings_0001",
-          "text": "早上好呀",
-          "tags": []
-        },
-        {
-          "id": "greetings_0002",
-          "text": "晚上好呀",
-          "tags": []
-        },
-        {
-          "id": "greetings_0003",
-          "text": "今天也要开心",
-          "tags": []
-        }
-      ]
     }
   },
   "generatedBy": "scripts/sync-index.mjs"
