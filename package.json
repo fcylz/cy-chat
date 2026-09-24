@@ -1,0 +1,15 @@
+{
+  "name": "cy-chat",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "字卡 & 表情包云端仓库。支持上传文件自动识别、去重、分类归位与索引生成。",
+  "scripts": {
+    "sync": "node scripts/sync-index.mjs",
+    "sync:write": "node scripts/sync-index.mjs --write",
+    "server": "node scripts/server.mjs"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

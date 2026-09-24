@@ -2,7 +2,7 @@
   "name": "cy-chat Word Cards",
   "version": "1.0.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-07-11T17:57:47.376Z",
+  "updatedAt": "2026-09-24T18:04:10.247Z",
   "categories": {
     "customReplies": {
       "label": "自定义回复",
@@ -7625,5 +7625,6 @@
       "description": "自定义状态文案",
       "items": []
     }
-  }
+  },
+  "generatedBy": "scripts/sync-index.mjs"
 }
