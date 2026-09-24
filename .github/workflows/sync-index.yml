@@ -1,0 +1,45 @@
+name: Sync Index
+
+# 任何人往仓库里放文件（GitHub 网页上传 / git push），索引自动跟着更新。
+# 流水线：读文件头判真实类型 -> 校验扩展名 -> 内容去重 -> 分类归位 -> 分配 ID -> 重建 JSON。
+
+on:
+  push:
+  workflow_dispatch:
+
+# 同一时刻只跑一个索引任务，避免两次提交互相覆盖
+concurrency:
+  group: sync-index
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    # 机器人自己的提交不再触发，避免死循环
+    if: github.actor != 'github-actions[bot]'
+    steps:
+      - name: 检出仓库
+        uses: actions/checkout@v4
+
+      - name: 准备 Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 同步索引
+        run: node scripts/sync-index.mjs --write
+
+      - name: 提交变更
+        run: |
+          git config user.name  "cy-chat-bot"
+          git config user.email "cy-chat-bot@users.noreply.github.com"
+          if [ -z "$(git status --porcelain)" ]; then
+            echo "索引已是最新，没有需要提交的改动。"
+            exit 0
+          fi
+          git add -A
+          git commit -m "chore(index): 自动同步索引 [skip-sync]"
+          git push
