@@ -282,10 +282,12 @@ const memeData = await memeRes.json();
     "eat":     { "label": "吃饭", "description": "饭点提醒、夜宵…", "items": [] },
     "interact":{ "label": "互动回应", "description": "互动按钮的回应…", "items": [] },
     "music":   { "label": "音乐", "description": "一起听歌…", "items": [] }
-    // 另有 period / water / garden / sync / reach / cjian / room / piggy / drift，同形
   }
 }
 ```
+
+> 示例里省掉了 `period` / `water` / `garden` / `sync` / `reach` / `cjian` / `room` / `piggy` / `drift`，
+> 结构与上面完全一样。全部 20 个 key 按声明顺序排列，`label` 就是给客户端看的名字。
 
 二十个分类的完整键：
 
