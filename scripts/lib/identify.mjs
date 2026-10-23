@@ -70,9 +70,13 @@ export const MEME_CATEGORIES = {
 
 /** 字卡分类：文件名即分类键，与 Word/words/<key>.txt 一一对应 */
 export const WORD_CATEGORIES = {
-  customReplies: { label: '自定义回复', description: '触发关键词后自动回复的文字内容' },
-  pokes: { label: '戳一戳', description: '被戳一戳时回复的文字' },
-  statuses: { label: '状态', description: '状态文案' },
+  daily: { label: '日常', description: '生活应答、状态描述、随口一句话' },
+  connect: { label: '连接', description: '通讯与在线状态：延迟、顶号、找字卡、被限制' },
+  address: { label: '称呼', description: '对人的叫法与昵称' },
+  quotes: { label: '官方语录', description: '角色设定台词（方承意 / 明昭侯府体）' },
+  sweet: { label: '情话', description: '表白、告白、亲昵话' },
+  kaomoji: { label: '颜文字', description: '纯字符拼的表情与装饰符号' },
+  emoji: { label: 'emoji', description: '含系统 emoji 的字卡' },
 };
 
 /* ------------------------------------------------------------------ *
@@ -127,8 +131,19 @@ export function mergeCategoryKeys(known, candidates) {
   return [...knownKeys, ...extra];
 }
 
-/** 字卡已知分类的固定 ID 前缀（必须保持不变，否则已发出的 ID 会漂移） */
-export const WORD_ID_PREFIX = { customReplies: 'reply', pokes: 'poke', statuses: 'status' };
+/**
+ * 字卡已知分类的固定 ID 前缀（必须保持不变，否则已发出的 ID 会漂移）。
+ * 历史条目统一是 reply_xxxx（分组前的老 ID），保留不动；新增条目按所属分类取前缀。
+ */
+export const WORD_ID_PREFIX = {
+  daily: 'daily',
+  connect: 'connect',
+  address: 'address',
+  quotes: 'quotes',
+  sweet: 'sweet',
+  kaomoji: 'kaomoji',
+  emoji: 'emoji',
+};
 
 /**
  * 为每个字卡分类分配 ID 前缀：已知分类沿用固定前缀，动态分类由分类名推导。
