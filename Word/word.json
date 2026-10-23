@@ -2,7 +2,7 @@
   "name": "cy-chat Word Cards",
   "version": "2.0.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-10-23T11:26:30.498Z",
+  "updatedAt": "2026-10-23T11:30:22.457Z",
   "categories": {
     "daily": {
       "label": "日常",
@@ -7648,7 +7648,978 @@
     "emoji": {
       "label": "emoji",
       "description": "含系统 emoji 的字卡",
-      "items": []
+      "items": [
+        {
+          "id": "reply_1522",
+          "text": "😀",
+          "tags": []
+        },
+        {
+          "id": "reply_1523",
+          "text": "😃",
+          "tags": []
+        },
+        {
+          "id": "reply_1524",
+          "text": "😄",
+          "tags": []
+        },
+        {
+          "id": "reply_1525",
+          "text": "😁",
+          "tags": []
+        },
+        {
+          "id": "reply_1526",
+          "text": "😆",
+          "tags": []
+        },
+        {
+          "id": "reply_1527",
+          "text": "😅",
+          "tags": []
+        },
+        {
+          "id": "reply_1528",
+          "text": "😂",
+          "tags": []
+        },
+        {
+          "id": "reply_1529",
+          "text": "🤣",
+          "tags": []
+        },
+        {
+          "id": "reply_1530",
+          "text": "😊",
+          "tags": []
+        },
+        {
+          "id": "reply_1531",
+          "text": "😇",
+          "tags": []
+        },
+        {
+          "id": "reply_1532",
+          "text": "🙂",
+          "tags": []
+        },
+        {
+          "id": "reply_1533",
+          "text": "🙃",
+          "tags": []
+        },
+        {
+          "id": "reply_1534",
+          "text": "😉",
+          "tags": []
+        },
+        {
+          "id": "reply_1535",
+          "text": "😌",
+          "tags": []
+        },
+        {
+          "id": "reply_1536",
+          "text": "😍",
+          "tags": []
+        },
+        {
+          "id": "reply_1537",
+          "text": "🥰",
+          "tags": []
+        },
+        {
+          "id": "reply_1538",
+          "text": "😘",
+          "tags": []
+        },
+        {
+          "id": "reply_1539",
+          "text": "😗",
+          "tags": []
+        },
+        {
+          "id": "reply_1540",
+          "text": "😙",
+          "tags": []
+        },
+        {
+          "id": "reply_1541",
+          "text": "😚",
+          "tags": []
+        },
+        {
+          "id": "reply_1542",
+          "text": "😋",
+          "tags": []
+        },
+        {
+          "id": "reply_1543",
+          "text": "😛",
+          "tags": []
+        },
+        {
+          "id": "reply_1544",
+          "text": "😝",
+          "tags": []
+        },
+        {
+          "id": "reply_1545",
+          "text": "😜",
+          "tags": []
+        },
+        {
+          "id": "reply_1546",
+          "text": "🤪",
+          "tags": []
+        },
+        {
+          "id": "reply_1547",
+          "text": "🤨",
+          "tags": []
+        },
+        {
+          "id": "reply_1548",
+          "text": "🧐",
+          "tags": []
+        },
+        {
+          "id": "reply_1549",
+          "text": "🤓",
+          "tags": []
+        },
+        {
+          "id": "reply_1550",
+          "text": "😎",
+          "tags": []
+        },
+        {
+          "id": "reply_1551",
+          "text": "🤩",
+          "tags": []
+        },
+        {
+          "id": "reply_1552",
+          "text": "🥳",
+          "tags": []
+        },
+        {
+          "id": "reply_1553",
+          "text": "😏",
+          "tags": []
+        },
+        {
+          "id": "reply_1554",
+          "text": "😒",
+          "tags": []
+        },
+        {
+          "id": "reply_1555",
+          "text": "😞",
+          "tags": []
+        },
+        {
+          "id": "reply_1556",
+          "text": "😔",
+          "tags": []
+        },
+        {
+          "id": "reply_1557",
+          "text": "😟",
+          "tags": []
+        },
+        {
+          "id": "reply_1558",
+          "text": "😕",
+          "tags": []
+        },
+        {
+          "id": "reply_1559",
+          "text": "🙁",
+          "tags": []
+        },
+        {
+          "id": "reply_1560",
+          "text": "☹️",
+          "tags": []
+        },
+        {
+          "id": "reply_1561",
+          "text": "😣",
+          "tags": []
+        },
+        {
+          "id": "reply_1562",
+          "text": "😖",
+          "tags": []
+        },
+        {
+          "id": "reply_1563",
+          "text": "😫",
+          "tags": []
+        },
+        {
+          "id": "reply_1564",
+          "text": "😩",
+          "tags": []
+        },
+        {
+          "id": "reply_1565",
+          "text": "🥺",
+          "tags": []
+        },
+        {
+          "id": "reply_1566",
+          "text": "😢",
+          "tags": []
+        },
+        {
+          "id": "reply_1567",
+          "text": "😭",
+          "tags": []
+        },
+        {
+          "id": "reply_1568",
+          "text": "😤",
+          "tags": []
+        },
+        {
+          "id": "reply_1569",
+          "text": "😠",
+          "tags": []
+        },
+        {
+          "id": "reply_1570",
+          "text": "😡",
+          "tags": []
+        },
+        {
+          "id": "reply_1571",
+          "text": "🤬",
+          "tags": []
+        },
+        {
+          "id": "reply_1572",
+          "text": "🤯",
+          "tags": []
+        },
+        {
+          "id": "reply_1573",
+          "text": "😳",
+          "tags": []
+        },
+        {
+          "id": "reply_1574",
+          "text": "🥵",
+          "tags": []
+        },
+        {
+          "id": "reply_1575",
+          "text": "🥶",
+          "tags": []
+        },
+        {
+          "id": "reply_1576",
+          "text": "😱",
+          "tags": []
+        },
+        {
+          "id": "reply_1577",
+          "text": "😨",
+          "tags": []
+        },
+        {
+          "id": "reply_1578",
+          "text": "😰",
+          "tags": []
+        },
+        {
+          "id": "reply_1579",
+          "text": "😥",
+          "tags": []
+        },
+        {
+          "id": "reply_1580",
+          "text": "😓",
+          "tags": []
+        },
+        {
+          "id": "reply_1581",
+          "text": "🤗",
+          "tags": []
+        },
+        {
+          "id": "reply_1582",
+          "text": "🤔",
+          "tags": []
+        },
+        {
+          "id": "reply_1583",
+          "text": "🤭",
+          "tags": []
+        },
+        {
+          "id": "reply_1584",
+          "text": "🤫",
+          "tags": []
+        },
+        {
+          "id": "reply_1585",
+          "text": "🤥",
+          "tags": []
+        },
+        {
+          "id": "reply_1586",
+          "text": "😶",
+          "tags": []
+        },
+        {
+          "id": "reply_1587",
+          "text": "😐",
+          "tags": []
+        },
+        {
+          "id": "reply_1588",
+          "text": "😑",
+          "tags": []
+        },
+        {
+          "id": "reply_1589",
+          "text": "😬",
+          "tags": []
+        },
+        {
+          "id": "reply_1590",
+          "text": "🙄",
+          "tags": []
+        },
+        {
+          "id": "reply_1591",
+          "text": "😯",
+          "tags": []
+        },
+        {
+          "id": "reply_1592",
+          "text": "😦",
+          "tags": []
+        },
+        {
+          "id": "reply_1593",
+          "text": "😧",
+          "tags": []
+        },
+        {
+          "id": "reply_1594",
+          "text": "😮",
+          "tags": []
+        },
+        {
+          "id": "reply_1595",
+          "text": "😲",
+          "tags": []
+        },
+        {
+          "id": "reply_1596",
+          "text": "🥱",
+          "tags": []
+        },
+        {
+          "id": "reply_1597",
+          "text": "😴",
+          "tags": []
+        },
+        {
+          "id": "reply_1598",
+          "text": "🤤",
+          "tags": []
+        },
+        {
+          "id": "reply_1599",
+          "text": "😪",
+          "tags": []
+        },
+        {
+          "id": "reply_1600",
+          "text": "😵",
+          "tags": []
+        },
+        {
+          "id": "reply_1601",
+          "text": "🤐",
+          "tags": []
+        },
+        {
+          "id": "reply_1602",
+          "text": "🥴",
+          "tags": []
+        },
+        {
+          "id": "reply_1603",
+          "text": "🤢",
+          "tags": []
+        },
+        {
+          "id": "reply_1604",
+          "text": "🤮",
+          "tags": []
+        },
+        {
+          "id": "reply_1605",
+          "text": "🤧",
+          "tags": []
+        },
+        {
+          "id": "reply_1606",
+          "text": "😷",
+          "tags": []
+        },
+        {
+          "id": "reply_1607",
+          "text": "🤒",
+          "tags": []
+        },
+        {
+          "id": "reply_1608",
+          "text": "🤕",
+          "tags": []
+        },
+        {
+          "id": "reply_1609",
+          "text": "🤠",
+          "tags": []
+        },
+        {
+          "id": "reply_1610",
+          "text": "😈",
+          "tags": []
+        },
+        {
+          "id": "reply_1611",
+          "text": "👿",
+          "tags": []
+        },
+        {
+          "id": "reply_1612",
+          "text": "👻",
+          "tags": []
+        },
+        {
+          "id": "reply_1613",
+          "text": "💀",
+          "tags": []
+        },
+        {
+          "id": "reply_1614",
+          "text": "👽",
+          "tags": []
+        },
+        {
+          "id": "reply_1615",
+          "text": "😺",
+          "tags": []
+        },
+        {
+          "id": "reply_1616",
+          "text": "😸",
+          "tags": []
+        },
+        {
+          "id": "reply_1617",
+          "text": "😹",
+          "tags": []
+        },
+        {
+          "id": "reply_1618",
+          "text": "😻",
+          "tags": []
+        },
+        {
+          "id": "reply_1619",
+          "text": "😼",
+          "tags": []
+        },
+        {
+          "id": "reply_1620",
+          "text": "😽",
+          "tags": []
+        },
+        {
+          "id": "reply_1621",
+          "text": "🙀",
+          "tags": []
+        },
+        {
+          "id": "reply_1622",
+          "text": "😿",
+          "tags": []
+        },
+        {
+          "id": "reply_1623",
+          "text": "😾",
+          "tags": []
+        },
+        {
+          "id": "reply_1624",
+          "text": "🙈",
+          "tags": []
+        },
+        {
+          "id": "reply_1625",
+          "text": "🙉",
+          "tags": []
+        },
+        {
+          "id": "reply_1626",
+          "text": "🙊",
+          "tags": []
+        },
+        {
+          "id": "reply_1627",
+          "text": "💋",
+          "tags": []
+        },
+        {
+          "id": "reply_1628",
+          "text": "💌",
+          "tags": []
+        },
+        {
+          "id": "reply_1629",
+          "text": "💘",
+          "tags": []
+        },
+        {
+          "id": "reply_1630",
+          "text": "💝",
+          "tags": []
+        },
+        {
+          "id": "reply_1631",
+          "text": "💖",
+          "tags": []
+        },
+        {
+          "id": "reply_1632",
+          "text": "💗",
+          "tags": []
+        },
+        {
+          "id": "reply_1633",
+          "text": "💓",
+          "tags": []
+        },
+        {
+          "id": "reply_1634",
+          "text": "💕",
+          "tags": []
+        },
+        {
+          "id": "reply_1635",
+          "text": "💔",
+          "tags": []
+        },
+        {
+          "id": "reply_1636",
+          "text": "🖤",
+          "tags": []
+        },
+        {
+          "id": "reply_1637",
+          "text": "💯",
+          "tags": []
+        },
+        {
+          "id": "reply_1638",
+          "text": "💢",
+          "tags": []
+        },
+        {
+          "id": "reply_1639",
+          "text": "💥",
+          "tags": []
+        },
+        {
+          "id": "reply_1640",
+          "text": "💫",
+          "tags": []
+        },
+        {
+          "id": "reply_1641",
+          "text": "💦",
+          "tags": []
+        },
+        {
+          "id": "reply_1642",
+          "text": "💨",
+          "tags": []
+        },
+        {
+          "id": "reply_1643",
+          "text": "💬",
+          "tags": []
+        },
+        {
+          "id": "reply_1644",
+          "text": "💭",
+          "tags": []
+        },
+        {
+          "id": "reply_1645",
+          "text": "💤",
+          "tags": []
+        },
+        {
+          "id": "reply_1646",
+          "text": "👋",
+          "tags": []
+        },
+        {
+          "id": "reply_1647",
+          "text": "👌",
+          "tags": []
+        },
+        {
+          "id": "reply_1648",
+          "text": "✌️",
+          "tags": []
+        },
+        {
+          "id": "reply_1649",
+          "text": "👍",
+          "tags": []
+        },
+        {
+          "id": "reply_1650",
+          "text": "👎",
+          "tags": []
+        },
+        {
+          "id": "reply_1651",
+          "text": "👏",
+          "tags": []
+        },
+        {
+          "id": "reply_1652",
+          "text": "🙌",
+          "tags": []
+        },
+        {
+          "id": "reply_1653",
+          "text": "🤝",
+          "tags": []
+        },
+        {
+          "id": "reply_1654",
+          "text": "🙏",
+          "tags": []
+        },
+        {
+          "id": "reply_1655",
+          "text": "✍️",
+          "tags": []
+        },
+        {
+          "id": "reply_1656",
+          "text": "👂",
+          "tags": []
+        },
+        {
+          "id": "reply_1657",
+          "text": "👃",
+          "tags": []
+        },
+        {
+          "id": "reply_1658",
+          "text": "👅",
+          "tags": []
+        },
+        {
+          "id": "reply_1659",
+          "text": "👄",
+          "tags": []
+        },
+        {
+          "id": "reply_1660",
+          "text": "🎉",
+          "tags": []
+        },
+        {
+          "id": "reply_1661",
+          "text": "🎊",
+          "tags": []
+        },
+        {
+          "id": "reply_1662",
+          "text": "🎈",
+          "tags": []
+        },
+        {
+          "id": "reply_1663",
+          "text": "🎂",
+          "tags": []
+        },
+        {
+          "id": "reply_1664",
+          "text": "🍰",
+          "tags": []
+        },
+        {
+          "id": "reply_1665",
+          "text": "🧁",
+          "tags": []
+        },
+        {
+          "id": "reply_1666",
+          "text": "🍭",
+          "tags": []
+        },
+        {
+          "id": "reply_1667",
+          "text": "🍬",
+          "tags": []
+        },
+        {
+          "id": "reply_1668",
+          "text": "🍫",
+          "tags": []
+        },
+        {
+          "id": "reply_1669",
+          "text": "🍩",
+          "tags": []
+        },
+        {
+          "id": "reply_1670",
+          "text": "🍪",
+          "tags": []
+        },
+        {
+          "id": "reply_1671",
+          "text": "🍔",
+          "tags": []
+        },
+        {
+          "id": "reply_1672",
+          "text": "🍟",
+          "tags": []
+        },
+        {
+          "id": "reply_1673",
+          "text": "🍕",
+          "tags": []
+        },
+        {
+          "id": "reply_1674",
+          "text": "🌭",
+          "tags": []
+        },
+        {
+          "id": "reply_1675",
+          "text": "🥪",
+          "tags": []
+        },
+        {
+          "id": "reply_1676",
+          "text": "🌮",
+          "tags": []
+        },
+        {
+          "id": "reply_1677",
+          "text": "🌯",
+          "tags": []
+        },
+        {
+          "id": "reply_1678",
+          "text": "🍜",
+          "tags": []
+        },
+        {
+          "id": "reply_1679",
+          "text": "🍦",
+          "tags": []
+        },
+        {
+          "id": "reply_1680",
+          "text": "🍧",
+          "tags": []
+        },
+        {
+          "id": "reply_1681",
+          "text": "🍯",
+          "tags": []
+        },
+        {
+          "id": "reply_1682",
+          "text": "🍵",
+          "tags": []
+        },
+        {
+          "id": "reply_1683",
+          "text": "🥤",
+          "tags": []
+        },
+        {
+          "id": "reply_1684",
+          "text": "🍺",
+          "tags": []
+        },
+        {
+          "id": "reply_1685",
+          "text": "🥂",
+          "tags": []
+        },
+        {
+          "id": "reply_1686",
+          "text": "🍷",
+          "tags": []
+        },
+        {
+          "id": "reply_1687",
+          "text": "🍎",
+          "tags": []
+        },
+        {
+          "id": "reply_1688",
+          "text": "🍐",
+          "tags": []
+        },
+        {
+          "id": "reply_1689",
+          "text": "🍊",
+          "tags": []
+        },
+        {
+          "id": "reply_1690",
+          "text": "🍋",
+          "tags": []
+        },
+        {
+          "id": "reply_1691",
+          "text": "🍌",
+          "tags": []
+        },
+        {
+          "id": "reply_1692",
+          "text": "🍉",
+          "tags": []
+        },
+        {
+          "id": "reply_1693",
+          "text": "🍇",
+          "tags": []
+        },
+        {
+          "id": "reply_1694",
+          "text": "🍓",
+          "tags": []
+        },
+        {
+          "id": "reply_1695",
+          "text": "🫐",
+          "tags": []
+        },
+        {
+          "id": "reply_1696",
+          "text": "🍈",
+          "tags": []
+        },
+        {
+          "id": "reply_1697",
+          "text": "🍒",
+          "tags": []
+        },
+        {
+          "id": "reply_1698",
+          "text": "🍑",
+          "tags": []
+        },
+        {
+          "id": "reply_1699",
+          "text": "🥭",
+          "tags": []
+        },
+        {
+          "id": "reply_1700",
+          "text": "🍍",
+          "tags": []
+        },
+        {
+          "id": "reply_1701",
+          "text": "🥝",
+          "tags": []
+        },
+        {
+          "id": "reply_1702",
+          "text": "🍅",
+          "tags": []
+        },
+        {
+          "id": "reply_1703",
+          "text": "🥦",
+          "tags": []
+        },
+        {
+          "id": "reply_1704",
+          "text": "🥕",
+          "tags": []
+        },
+        {
+          "id": "reply_1705",
+          "text": "🌽",
+          "tags": []
+        },
+        {
+          "id": "reply_1706",
+          "text": "🌶️",
+          "tags": []
+        },
+        {
+          "id": "reply_1707",
+          "text": "🥬",
+          "tags": []
+        },
+        {
+          "id": "reply_1708",
+          "text": "🥔",
+          "tags": []
+        },
+        {
+          "id": "reply_1709",
+          "text": "🍠",
+          "tags": []
+        },
+        {
+          "id": "reply_1710",
+          "text": "🥐",
+          "tags": []
+        },
+        {
+          "id": "reply_1711",
+          "text": "🥖",
+          "tags": []
+        },
+        {
+          "id": "reply_1712",
+          "text": "🧀",
+          "tags": []
+        },
+        {
+          "id": "reply_1713",
+          "text": "🥚",
+          "tags": []
+        },
+        {
+          "id": "reply_1714",
+          "text": "🍳",
+          "tags": []
+        },
+        {
+          "id": "reply_1715",
+          "text": "🥞",
+          "tags": []
+        }
+      ]
     }
   },
   "generatedBy": "scripts/sync-index.mjs"
