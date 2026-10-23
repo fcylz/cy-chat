@@ -59,7 +59,7 @@ const report = {
   mode: OPT.write ? 'write' : 'dry-run',
   startedAt: new Date().toISOString(),
   meme: { scanned: 0, valid: 0, added: 0, kept: 0, moved: 0, removedOrphans: 0, duplicates: [], formatWarnings: [], failed: [], discovered: [] },
-  word: { files: 0, added: 0, kept: 0, discovered: [] },
+  word: { files: 0, added: 0, moved: 0, kept: 0, discovered: [] },
   warnings: [],
   errors: [],
   operations: [],
@@ -415,23 +415,16 @@ function syncWord() {
     }
   }
 
-  // ---- 2. ID 前缀：预设分类沿用固定前缀（改了会让已发出的 ID 漂移），动态分类由分类名推导
-  // 用 categories 的键而不是 validKeys —— 上一步可能已经回收掉若干分类
+  // ---- 2. 先只读文件：建立「文本 → 它现在被写在哪个分类的 txt 里」
+  // 同一文本出现在多个 txt 时只认第一份（按文件路径排序），其余告警跳过。
   const liveKeys = Object.keys(categories);
-  const prefixByCat = wordIdPrefixes(liveKeys);
-  const nextNum = {};
-  for (const cat of liveKeys) {
-    let max = 0;
-    for (const it of categories[cat].items) max = Math.max(max, idNumber(it.id));
-    nextNum[cat] = max;
-  }
+  // 兜底分类：优先 daily（日常），被删了就取第一个存活分类。
+  const fallback = liveKeys.includes('daily') ? 'daily' : liveKeys[0];
 
+  const desired = new Map();
   for (const rel of files) {
     const raw = fs.readFileSync(path.join(WORDS_DIR, rel), 'utf8');
     const srcKey = baseName(rel);
-    // 兜底分类：优先 daily（日常），被删了就取第一个存活分类。
-    // 注意 liveKeys 里一定有值——上面已按预设表补齐，这里的 ?? 只是防御。
-    const fallback = liveKeys.includes('daily') ? 'daily' : liveKeys[0];
     const category = liveKeys.includes(srcKey) ? srcKey : fallback;
     if (category !== srcKey) {
       warn(`字卡文件名 "${srcKey}" 不是合法分类名，内容归入 ${fallback}（文件名即分类，例如 greetings.txt 就是一个 greetings 分类）`);
@@ -443,16 +436,54 @@ function syncWord() {
       .filter((l) => l && !l.startsWith('#'));
 
     for (const text of lines) {
-      const hit = existing.get(text);
-      if (hit) {
-        if (hit.cat !== category) warn(`文本已在分类 ${hit.cat} 中，跳过本次 ${rel} 的重复: ${text.slice(0, 30)}`);
+      const prev = desired.get(text);
+      if (prev) {
+        if (prev.category !== category) {
+          warn(`文本同时出现在 ${prev.rel} 和 ${rel}，以 ${prev.rel} 为准: ${text.slice(0, 30)}`);
+        }
         continue;
       }
-      const item = { id: formatId(prefixByCat[category] || 'reply', ++nextNum[category]), text, tags: [] };
-      categories[category].items.push(item);
-      existing.set(text, { cat: category, item });
-      report.word.added++;
+      desired.set(text, { category, rel });
     }
+  }
+
+  // ---- 3. 改分类：条目跟着文本走
+  // 旧逻辑「文本已在别的分类里就跳过」会让分类彻底改不动：
+  // 从 daily.txt 删掉一行，条目不会消失（条目层只增不删）；
+  // 再加到 sweet.txt，又被跨分类查重拦下 —— 两边都不生效，条目永远留在原分类。
+  // 现在以「文件里写了什么」为准：文本出现在哪个分类的 txt 里，条目就归到哪个分类，id 不变。
+  // 文本在任何 txt 里都没出现，才视为「删了一行」，原地保留（保护手误删除）。
+  const moved = [];
+  for (const [text, hit] of existing) {
+    const want = desired.get(text);
+    if (want && want.category !== hit.cat) moved.push({ text, from: hit.cat, to: want.category, item: hit.item });
+  }
+  for (const m of moved) {
+    const fromGroup = categories[m.from];
+    const toGroup = categories[m.to];
+    if (!fromGroup || !toGroup) continue;
+    const idx = fromGroup.items.indexOf(m.item);
+    if (idx >= 0) fromGroup.items.splice(idx, 1);
+    toGroup.items.push(m.item);
+    existing.set(m.text, { cat: m.to, item: m.item });
+    report.word.moved++;
+  }
+
+  // ---- 4. 新增：文件里有、索引里没有的条目
+  // 编号跨全部分类取最大值再递增，不按分类各算各的 —— 否则七个分类各自从自己的
+  // 最大值往后排，会产出重复的数字（daily_1286 和 reply_1286 指向两条不同字卡）。
+  const prefixByCat = wordIdPrefixes(liveKeys);
+  let nextNum = 0;
+  for (const cat of liveKeys) {
+    for (const it of categories[cat].items) nextNum = Math.max(nextNum, idNumber(it.id));
+  }
+
+  for (const [text, want] of desired) {
+    if (existing.has(text)) continue;
+    const item = { id: formatId(prefixByCat[want.category] || 'reply', ++nextNum), text, tags: [] };
+    categories[want.category].items.push(item);
+    existing.set(text, { cat: want.category, item });
+    report.word.added++;
   }
 
   return {
@@ -530,6 +561,7 @@ function main() {
   L.push('【Word 字卡】');
   L.push(`  扫描 txt        ${report.word.files}`);
   L.push(`  新增条目        ${report.word.added}`);
+  L.push(`  改分类          ${report.word.moved}`);
   L.push(`  现有条目        ${report.word.kept}`);
   if (report.word.discovered.length) L.push(`  ★ 新发现的分类  ${report.word.discovered.join(', ')}`);
   L.push('');

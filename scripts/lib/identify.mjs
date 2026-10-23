@@ -132,41 +132,24 @@ export function mergeCategoryKeys(known, candidates) {
 }
 
 /**
- * 字卡已知分类的固定 ID 前缀（必须保持不变，否则已发出的 ID 会漂移）。
- * 历史条目统一是 reply_xxxx（分组前的老 ID），保留不动；新增条目按所属分类取前缀。
+ * 字卡 ID 前缀：所有分类统一用 reply，不按分类区分。
+ *
+ * 理由：分组前的 1521 条历史条目 ID 是 reply_0001～reply_1521，分组只是改了归属，
+ * ID 必须保持原样。若新增条目改用分类名当前缀（daily_1522 / sweet_1523），
+ * ID 体系会碎成七套，且各分类的编号会互相重复（daily_1286 与 reply_1286 是两条
+ * 不同的字卡，客户端只取数字部分就会撞车）。统一 reply 后编号全局连续递增，
+ * 客户端认一种前缀就够。
+ *
+ * 动态分类（新建 greetings.txt）同样走 reply，不再按分类名推导前缀。
  */
-export const WORD_ID_PREFIX = {
-  daily: 'daily',
-  connect: 'connect',
-  address: 'address',
-  quotes: 'quotes',
-  sweet: 'sweet',
-  kaomoji: 'kaomoji',
-  emoji: 'emoji',
-};
+export const WORD_ID_PREFIX = Object.fromEntries(
+  Object.keys(WORD_CATEGORIES).map((key) => [key, 'reply'])
+);
 
-/**
- * 为每个字卡分类分配 ID 前缀：已知分类沿用固定前缀，动态分类由分类名推导。
- * 推导可能撞车（`hi-2024` 与 `hi2024` 都是 `hi2024`），所以全局去重后加序号，
- * 保证不同分类不会产出相同 ID。
- */
+/** 为每个字卡分类分配 ID 前缀：一律 reply，保持全局唯一且历史连续。 */
 export function wordIdPrefixes(keys) {
   const out = {};
-  const used = new Set();
-  for (const k of keys) {
-    if (!WORD_ID_PREFIX[k]) continue;
-    out[k] = WORD_ID_PREFIX[k];
-    used.add(WORD_ID_PREFIX[k]);
-  }
-  for (const k of keys) {
-    if (out[k]) continue;
-    const base = String(k).toLowerCase().replace(/[^a-z0-9]/g, '').slice(0, 12) || 'word';
-    let prefix = base;
-    let n = 2;
-    while (used.has(prefix)) prefix = `${base}${n++}`;
-    used.add(prefix);
-    out[k] = prefix;
-  }
+  for (const k of keys) out[k] = 'reply';
   return out;
 }
 
