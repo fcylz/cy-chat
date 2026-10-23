@@ -1,8 +1,8 @@
 {
   "name": "cy-chat Word Cards",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-10-23T11:31:39.041Z",
+  "updatedAt": "2026-10-23T11:53:07.359Z",
   "categories": {
     "daily": {
       "label": "日常",
@@ -8930,6 +8930,71 @@
           "tags": []
         }
       ]
+    },
+    "fish": {
+      "label": "摸鱼",
+      "description": "摸鱼浮字与抓包回应：TA 在偷懒 / 抓到摸鱼",
+      "items": []
+    },
+    "eat": {
+      "label": "吃饭",
+      "description": "饭点提醒、追着问吃没吃、夜宵",
+      "items": []
+    },
+    "period": {
+      "label": "经期",
+      "description": "经期关心、经前预警、推迟",
+      "items": []
+    },
+    "water": {
+      "label": "喝水",
+      "description": "喝水提醒与喝够夸奖",
+      "items": []
+    },
+    "garden": {
+      "label": "花园",
+      "description": "花园悄悄话：浇花、花在长",
+      "items": []
+    },
+    "sync": {
+      "label": "同频",
+      "description": "同频：TA 此刻在做什么 / 没接住的回应",
+      "items": []
+    },
+    "reach": {
+      "label": "伸手",
+      "description": "伸手：被抓住的回应与触感描述",
+      "items": []
+    },
+    "cjian": {
+      "label": "此间",
+      "description": "此间：在场感知、气息与落空",
+      "items": []
+    },
+    "room": {
+      "label": "房间",
+      "description": "房间：进门、靠近、家具互动、方位感知",
+      "items": []
+    },
+    "piggy": {
+      "label": "存钱罐",
+      "description": "存钱罐：存入 / 取款 / 塞硬币的碎碎念",
+      "items": []
+    },
+    "drift": {
+      "label": "漂流瓶",
+      "description": "漂流瓶：TA 的话、TA 的回应、海风",
+      "items": []
+    },
+    "interact": {
+      "label": "互动回应",
+      "description": "互动按钮的回应：邀请、提问、贴贴、游戏输赢",
+      "items": []
+    },
+    "music": {
+      "label": "音乐",
+      "description": "一起听歌：暂停 / 恢复播放时的话",
+      "items": []
     }
   },
   "generatedBy": "scripts/sync-index.mjs"
