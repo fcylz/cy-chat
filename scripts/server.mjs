@@ -242,7 +242,7 @@ async function handleWord(req, res, url) {
   if (!lines.length) throw new HttpError(400, '没有可用的文本行（空行和 # 开头的注释会被忽略）');
 
   // 分类不再是白名单：分类名就是 Word/words/<分类名>.txt 的文件名。
-  const category = sanitizeCategory(url.searchParams.get('category') || 'customReplies');
+  const category = sanitizeCategory(url.searchParams.get('category') || 'daily');
   if (!category) {
     throw new HttpError(400, `分类名不合法，不能作为文件名使用（禁含 / \\ : * ? " < > | 和控制字符，不能以点开头，长度 ≤ 40）`);
   }

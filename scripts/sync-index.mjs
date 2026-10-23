@@ -429,9 +429,12 @@ function syncWord() {
   for (const rel of files) {
     const raw = fs.readFileSync(path.join(WORDS_DIR, rel), 'utf8');
     const srcKey = baseName(rel);
-    const category = liveKeys.includes(srcKey) ? srcKey : 'customReplies';
+    // 兜底分类：优先 daily（日常），被删了就取第一个存活分类。
+    // 注意 liveKeys 里一定有值——上面已按预设表补齐，这里的 ?? 只是防御。
+    const fallback = liveKeys.includes('daily') ? 'daily' : liveKeys[0];
+    const category = liveKeys.includes(srcKey) ? srcKey : fallback;
     if (category !== srcKey) {
-      warn(`字卡文件名 "${srcKey}" 不是合法分类名，内容归入 customReplies（文件名即分类，例如 greetings.txt 就是一个 greetings 分类）`);
+      warn(`字卡文件名 "${srcKey}" 不是合法分类名，内容归入 ${fallback}（文件名即分类，例如 greetings.txt 就是一个 greetings 分类）`);
     }
 
     const lines = raw
