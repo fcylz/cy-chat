@@ -68,7 +68,21 @@ export const MEME_CATEGORIES = {
   stickers: { label: '贴图', description: '无文字装饰性贴图' },
 };
 
-/** 字卡分类：文件名即分类键，与 Word/words/<key>.txt 一一对应 */
+/**
+ * 字卡分类：文件名即分类键，与 Word/words/<key>.txt 一一对应。
+ *
+ * 分两段：
+ *   · 通用字卡（daily … emoji）—— 聊天里随口一句，进任何站的通用回复池。
+ *   · 功能字卡（fish … music）—— 对齐 mochi-x 的「其它互动功能字卡」池
+ *     （mochi 源码 CC_FUNC_KEYS），只在各自功能页被抽到，不进聊天通用回复。
+ *
+ * 功能分类的 label **必须与 mochi 的 CC_LABEL 逐字一致**：mochi 站点
+ * （chatcard.js 的 CLOUD_TYPE_BY_LABEL）和油猴脚本（wordMap）都是按 label
+ * 反查字卡分类的，改一个字就会落回主字卡、变成普通文本组。
+ *
+ * 少列一个 mjfree（梦角自由造句）——那是 dream-free.js 程序生成的重造句卡，
+ * 没有云端文本来源，导进去只会变成一堆上下文无关的句子。
+ */
 export const WORD_CATEGORIES = {
   daily: { label: '日常', description: '生活应答、状态描述、随口一句话' },
   connect: { label: '连接', description: '通讯与在线状态：延迟、顶号、找字卡、被限制' },
@@ -77,6 +91,21 @@ export const WORD_CATEGORIES = {
   sweet: { label: '情话', description: '表白、告白、亲昵话' },
   kaomoji: { label: '颜文字', description: '纯字符拼的表情与装饰符号' },
   emoji: { label: 'emoji', description: '含系统 emoji 的字卡' },
+
+  // ---- 功能分类（对齐 mochi-x CC_FUNC_KEYS，顺序同 mochi 的 CC_LABEL）----
+  fish: { label: '摸鱼', description: '摸鱼浮字与抓包回应：TA 在偷懒 / 抓到摸鱼' },
+  eat: { label: '吃饭', description: '饭点提醒、追着问吃没吃、夜宵' },
+  period: { label: '经期', description: '经期关心、经前预警、推迟' },
+  water: { label: '喝水', description: '喝水提醒与喝够夸奖' },
+  garden: { label: '花园', description: '花园悄悄话：浇花、花在长' },
+  sync: { label: '同频', description: '同频：TA 此刻在做什么 / 没接住的回应' },
+  reach: { label: '伸手', description: '伸手：被抓住的回应与触感描述' },
+  cjian: { label: '此间', description: '此间：在场感知、气息与落空' },
+  room: { label: '房间', description: '房间：进门、靠近、家具互动、方位感知' },
+  piggy: { label: '存钱罐', description: '存钱罐：存入 / 取款 / 塞硬币的碎碎念' },
+  drift: { label: '漂流瓶', description: '漂流瓶：TA 的话、TA 的回应、海风' },
+  interact: { label: '互动回应', description: '互动按钮的回应：邀请、提问、贴贴、游戏输赢' },
+  music: { label: '音乐', description: '一起听歌：暂停 / 恢复播放时的话' },
 };
 
 /* ------------------------------------------------------------------ *

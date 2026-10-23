@@ -28,6 +28,10 @@
 | 字卡容器 | `categories.customReplies.items`（1521 条堆在一起） | `categories.daily` / `.connect` / `.address` / `.quotes` / `.sweet` / `.kaomoji` / `.emoji` |
 | 字卡版本 | `1.0.0` | `2.0.0` |
 
+> 之后 `2.1.0` 又补了 13 个**功能分类**（`fish` 摸鱼 / `eat` 吃饭 / `period` 经期 / … / `music` 音乐），
+> 对齐 mochi-x 的「其它互动功能字卡」池。它们是空槽位，首次上线时 `items` 全为 `[]`，
+> 不改变任何已有分类的键与条目；不认识这些 key 的客户端忽略即可。
+
 **仍然读 `customReplies` 的客户端会取不到数据，必须改。** 条目本身没有丢，只是换了容器：
 
 - 要"全部字卡"：把所有分类的 `items` 合并。
@@ -58,6 +62,19 @@ cy-chat/
 │   │   ├── sweet.txt        # 情话
 │   │   ├── kaomoji.txt      # 颜文字
 │   │   ├── emoji.txt        # emoji
+│   │   ├── fish.txt         # 摸鱼（功能分类，下同）
+│   │   ├── eat.txt          # 吃饭
+│   │   ├── period.txt       # 经期
+│   │   ├── water.txt        # 喝水
+│   │   ├── garden.txt       # 花园
+│   │   ├── sync.txt         # 同频
+│   │   ├── reach.txt        # 伸手
+│   │   ├── cjian.txt        # 此间
+│   │   ├── room.txt         # 房间
+│   │   ├── piggy.txt        # 存钱罐
+│   │   ├── drift.txt        # 漂流瓶
+│   │   ├── interact.txt     # 互动回应
+│   │   ├── music.txt        # 音乐
 │   │   └── <任意新名字>.txt # 想加分类就直接建 txt，文件名随你
 │   └── word.json           # 字卡索引（自动生成，勿手改）
 ├── scripts/
@@ -98,7 +115,20 @@ Word/words/sweet.txt           → 分类 sweet（情话）
 Word/words/greetings.txt       → 分类 greetings（新分类，自动出现）
 ```
 
-字卡共七个预设分类：`daily` 日常 / `connect` 连接 / `address` 称呼 / `quotes` 官方语录 / `sweet` 情话 / `kaomoji` 颜文字 / `emoji`。
+字卡共二十个预设分类，分两段。
+
+**通用字卡**（聊天里随口一句，任何客户端都该并进它的通用回复池）：
+
+`daily` 日常 / `connect` 连接 / `address` 称呼 / `quotes` 官方语录 / `sweet` 情话 / `kaomoji` 颜文字 / `emoji`
+
+**功能字卡**（只在对应功能页被抽到，**不该**进聊天通用回复池）：
+
+`fish` 摸鱼 / `eat` 吃饭 / `period` 经期 / `water` 喝水 / `garden` 花园 / `sync` 同频 / `reach` 伸手 /
+`cjian` 此间 / `room` 房间 / `piggy` 存钱罐 / `drift` 漂流瓶 / `interact` 互动回应 / `music` 音乐
+
+功能分类的 `label` 与 mochi-x 源码里的 `CC_LABEL` 逐字一致——mochi 的站点导入与油猴脚本都是
+**按 label 反查字卡分类**的（`摸鱼` → `fish`），改一个字就会落回主字卡、变成普通文本组。
+`mjfree`（梦角自由造句）没有列进来：那是 mochi 程序生成的重造句卡，没有云端文本来源。
 
 文件格式：一行一条，空行忽略，`#` 开头的行是注释。
 
@@ -114,7 +144,7 @@ Word/words/greetings.txt       → 分类 greetings（新分类，自动出现�
 2. **放在新文件夹里的图不会被搬走**。分类就是你放的那个目录，脚本只在两种情况下动文件：图片平铺在 `Meme/images/` 根目录（会归入默认分类 `reactions`），以及内容完全重复的冗余文件（会删掉重复的那份）。
 3. **分类跟着文件走**。删掉文件夹 / 删掉 txt，对应分类就回收；重新放回去就自动回来。
    - 图片：目录没了，条目和分类一起清掉。
-   - 字卡：**动态分类**（你自己新建的 txt）删掉文件后连分类一起回收；**预设七分类**（`daily` / `connect` / `address` / `quotes` / `sweet` / `kaomoji` / `emoji`）例外，即使 txt 不在了也**只增不删**，防止误删历史字卡。
+   - 字卡：**动态分类**（你自己新建的 txt）删掉文件后连分类一起回收；**预设分类**（上面那二十个）例外，即使 txt 不在了也**只增不删**，防止误删历史字卡、也保住功能分类的空槽位。
 4. **改字卡分类 = 把它从一个 txt 挪到另一个 txt**。条目会跟着文本走，`id` 保持不变。
 
    ```
@@ -207,7 +237,7 @@ curl http://127.0.0.1:8787/health
 
 | 端点 | 说明 |
 |------|------|
-| `Word/word.json` | 字卡数据（日常、连接、称呼、官方语录、情话、颜文字、emoji 七个分类） |
+| `Word/word.json` | 字卡数据（7 个通用分类 + 13 个功能分类） |
 | `Meme/meme.json` | 表情包索引（分类、图片 URL、标签） |
 
 ```javascript
@@ -229,7 +259,7 @@ const memeData = await memeRes.json();
 ```json
 {
   "name": "cy-chat Word Cards",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
   "updatedAt": "2026-10-23T18:16:00.000Z",
   "generatedBy": "scripts/sync-index.mjs",
@@ -246,12 +276,23 @@ const memeData = await memeRes.json();
     "quotes":  { "label": "官方语录", "description": "角色设定台词…", "items": [] },
     "sweet":   { "label": "情话", "description": "表白、告白、亲昵话", "items": [] },
     "kaomoji": { "label": "颜文字", "description": "纯字符拼的表情与装饰符号", "items": [] },
-    "emoji":   { "label": "emoji", "description": "含系统 emoji 的字卡", "items": [] }
+    "emoji":   { "label": "emoji", "description": "含系统 emoji 的字卡", "items": [] },
+
+    "fish":    { "label": "摸鱼", "description": "摸鱼浮字与抓包回应…", "items": [] },
+    "eat":     { "label": "吃饭", "description": "饭点提醒、夜宵…", "items": [] },
+    "interact":{ "label": "互动回应", "description": "互动按钮的回应…", "items": [] },
+    "music":   { "label": "音乐", "description": "一起听歌…", "items": [] }
+    // 另有 period / water / garden / sync / reach / cjian / room / piggy / drift，同形
   }
 }
 ```
 
-七个分类的完整键：`daily` / `connect` / `address` / `quotes` / `sweet` / `kaomoji` / `emoji`。客户端按分类取用时，直接读对应的 key 即可。
+二十个分类的完整键：
+
+- 通用：`daily` / `connect` / `address` / `quotes` / `sweet` / `kaomoji` / `emoji`
+- 功能：`fish` / `eat` / `period` / `water` / `garden` / `sync` / `reach` / `cjian` / `room` / `piggy` / `drift` / `interact` / `music`
+
+客户端按分类取用时，直接读对应的 key 即可；只做通用回复的客户端请**跳过功能分类**（它们 `items` 为空时不影响，但灌进通用池会抽出上下文无关的句子）。
 
 ### meme.json
 
@@ -309,6 +350,6 @@ node scripts/sync-index.mjs --json             # 附带机器可读报告
 - **分类名要能当目录名用**。不能含 `/ \ : * ? " < > |` 和控制字符，不能以 `.` 开头，长度 ≤ 40。中文分类名完全没问题。拼错的分类名会各自变成一个分类 —— 建议拼写前先看一眼已有的目录名。
 - **平铺在 `Meme/images/` 根目录的图会被归入 `reactions`**。想自成一类，放进文件夹即可。
 - **动态分类被清空后会从 JSON 里消失**（镜像语义）。预设的 `emotions` / `interactions` / `stickers` 会保留为空分类，作为固定槽位。
-- **字卡是「分类层镜像 + 条目层追加」**：删掉一个自定义 txt，分类会被回收（文本仍在该仓库的 git 历史里，加回文件即可恢复）；但**删掉 txt 里的某一行不会让已发出的字卡消失**，这是为了防止手误丢数据。预设七分类 `daily` / `connect` / `address` / `quotes` / `sweet` / `kaomoji` / `emoji` 连分类层都不删。
+- **字卡是「分类层镜像 + 条目层追加」**：删掉一个自定义 txt，分类会被回收（文本仍在该仓库的 git 历史里，加回文件即可恢复）；但**删掉 txt 里的某一行不会让已发出的字卡消失**，这是为了防止手误丢数据。二十个预设分类连分类层都不删。
 - **定时兜底不可靠**。GitHub 的 `schedule` 在高负载时会延迟或**直接丢弃**运行（不报错），本仓库实测丢弃比例很高（详见上方"什么时候会跑"）。**要立刻生效请用 push 或 Actions 页面手动触发**，不要把定时当保证。
 - **仓库长期无活动时 GitHub 会自动停用定时任务**（官方策略：60 天无提交）。有正常提交就不会触发这条。
