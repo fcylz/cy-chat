@@ -2,7 +2,7 @@
   "name": "cy-chat Word Cards",
   "version": "2.0.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-10-23T10:15:54.899Z",
+  "updatedAt": "2026-10-23T11:26:30.498Z",
   "categories": {
     "daily": {
       "label": "日常",
@@ -4642,6 +4642,431 @@
           "id": "reply_1285",
           "text": "每天都说一遍",
           "tags": []
+        },
+        {
+          "id": "reply_0108",
+          "text": "看到记得回复🥲",
+          "tags": []
+        },
+        {
+          "id": "reply_0109",
+          "text": "好的👌🏻",
+          "tags": []
+        },
+        {
+          "id": "reply_0158",
+          "text": "摸摸🫳🏻",
+          "tags": []
+        },
+        {
+          "id": "reply_0279",
+          "text": "期待🤧",
+          "tags": []
+        },
+        {
+          "id": "reply_0280",
+          "text": "抱歉🥺",
+          "tags": []
+        },
+        {
+          "id": "reply_0298",
+          "text": "就这样撒娇🥺",
+          "tags": []
+        },
+        {
+          "id": "reply_0382",
+          "text": "我很想要亲亲欸🥺",
+          "tags": []
+        },
+        {
+          "id": "reply_0399",
+          "text": "来陪你了🥰",
+          "tags": []
+        },
+        {
+          "id": "reply_0410",
+          "text": "永不分离💞",
+          "tags": []
+        },
+        {
+          "id": "reply_0434",
+          "text": "好可爱🥰",
+          "tags": []
+        },
+        {
+          "id": "reply_0436",
+          "text": "想拥抱🫂",
+          "tags": []
+        },
+        {
+          "id": "reply_0445",
+          "text": "我在你身边，你终于发现了。真不容易👏🏻",
+          "tags": []
+        },
+        {
+          "id": "reply_0448",
+          "text": "可爱🥰",
+          "tags": []
+        },
+        {
+          "id": "reply_0469",
+          "text": "没错(#^.^#)👌🏻是我本人",
+          "tags": []
+        },
+        {
+          "id": "reply_0482",
+          "text": "❤️",
+          "tags": []
+        },
+        {
+          "id": "reply_0499",
+          "text": "为什么不能😢",
+          "tags": []
+        },
+        {
+          "id": "reply_0502",
+          "text": "不可以❌",
+          "tags": []
+        },
+        {
+          "id": "reply_0504",
+          "text": "我不同意💔",
+          "tags": []
+        },
+        {
+          "id": "reply_0521",
+          "text": "可能要很久🥲抱歉（30分钟➕）",
+          "tags": []
+        },
+        {
+          "id": "reply_0532",
+          "text": "收到(＾ω＾)👌🏻",
+          "tags": []
+        },
+        {
+          "id": "reply_0537",
+          "text": "找不到字卡了😢",
+          "tags": []
+        },
+        {
+          "id": "reply_0539",
+          "text": "对不起😔",
+          "tags": []
+        },
+        {
+          "id": "reply_0543",
+          "text": "我爱你🥰",
+          "tags": []
+        },
+        {
+          "id": "reply_0556",
+          "text": "还在赖床？……好吧，一起☺️",
+          "tags": []
+        },
+        {
+          "id": "reply_0690",
+          "text": "我在下雨🌧",
+          "tags": []
+        },
+        {
+          "id": "reply_1062",
+          "text": "在出差✈️",
+          "tags": []
+        },
+        {
+          "id": "reply_1063",
+          "text": "在车上🚄",
+          "tags": []
+        },
+        {
+          "id": "reply_1064",
+          "text": "在吃饭🍚",
+          "tags": []
+        },
+        {
+          "id": "reply_1065",
+          "text": "在画画🎨",
+          "tags": []
+        },
+        {
+          "id": "reply_1066",
+          "text": "在洗澡🛁",
+          "tags": []
+        },
+        {
+          "id": "reply_1067",
+          "text": "在烹饪🍳",
+          "tags": []
+        },
+        {
+          "id": "reply_1068",
+          "text": "在工作💼",
+          "tags": []
+        },
+        {
+          "id": "reply_1069",
+          "text": "在开会🖥️",
+          "tags": []
+        },
+        {
+          "id": "reply_1070",
+          "text": "在睡觉💤",
+          "tags": []
+        },
+        {
+          "id": "reply_1071",
+          "text": "在听歌🎶",
+          "tags": []
+        },
+        {
+          "id": "reply_1072",
+          "text": "在车上🚗",
+          "tags": []
+        },
+        {
+          "id": "reply_1073",
+          "text": "在喝水💧",
+          "tags": []
+        },
+        {
+          "id": "reply_1074",
+          "text": "上厕所🚽",
+          "tags": []
+        },
+        {
+          "id": "reply_1075",
+          "text": "在喂小动物🥣",
+          "tags": []
+        },
+        {
+          "id": "reply_1076",
+          "text": "打扫卫生🧹",
+          "tags": []
+        },
+        {
+          "id": "reply_1077",
+          "text": "在拍照📸",
+          "tags": []
+        },
+        {
+          "id": "reply_1078",
+          "text": "打游戏🎮",
+          "tags": []
+        },
+        {
+          "id": "reply_1079",
+          "text": "在发呆💭",
+          "tags": []
+        },
+        {
+          "id": "reply_1080",
+          "text": "在购物🛍️",
+          "tags": []
+        },
+        {
+          "id": "reply_1081",
+          "text": "在游泳🏊🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1082",
+          "text": "在跑步🏃🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1083",
+          "text": "在健身🏋🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1084",
+          "text": "在爬山🧗🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1085",
+          "text": "在滑雪⛷️",
+          "tags": []
+        },
+        {
+          "id": "reply_1086",
+          "text": "在钓鱼🎣",
+          "tags": []
+        },
+        {
+          "id": "reply_1087",
+          "text": "在冥想🧘🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1088",
+          "text": "修理中🔧",
+          "tags": []
+        },
+        {
+          "id": "reply_1089",
+          "text": "在观星🔭",
+          "tags": []
+        },
+        {
+          "id": "reply_1090",
+          "text": "发送传讯/信📩",
+          "tags": []
+        },
+        {
+          "id": "reply_1091",
+          "text": "看医生🩺",
+          "tags": []
+        },
+        {
+          "id": "reply_1092",
+          "text": "在写信/传讯✉️",
+          "tags": []
+        },
+        {
+          "id": "reply_1093",
+          "text": "看电视📺",
+          "tags": []
+        },
+        {
+          "id": "reply_1094",
+          "text": "在唱歌🎤",
+          "tags": []
+        },
+        {
+          "id": "reply_1095",
+          "text": "在演奏乐器🎹",
+          "tags": []
+        },
+        {
+          "id": "reply_1096",
+          "text": "在理发💇🏻‍♂️",
+          "tags": []
+        },
+        {
+          "id": "reply_1097",
+          "text": "在散步👣",
+          "tags": []
+        },
+        {
+          "id": "reply_1098",
+          "text": "在海边🏖️",
+          "tags": []
+        },
+        {
+          "id": "reply_1099",
+          "text": "看日出🌄",
+          "tags": []
+        },
+        {
+          "id": "reply_1100",
+          "text": "看日落🌅",
+          "tags": []
+        },
+        {
+          "id": "reply_1101",
+          "text": "在旅行🏞️",
+          "tags": []
+        },
+        {
+          "id": "reply_1102",
+          "text": "高速上🛣️",
+          "tags": []
+        },
+        {
+          "id": "reply_1103",
+          "text": "在露营🏕️",
+          "tags": []
+        },
+        {
+          "id": "reply_1104",
+          "text": "在酒店🏨",
+          "tags": []
+        },
+        {
+          "id": "reply_1105",
+          "text": "在开车🏍️",
+          "tags": []
+        },
+        {
+          "id": "reply_1106",
+          "text": "坐缆车🚠",
+          "tags": []
+        },
+        {
+          "id": "reply_1107",
+          "text": "在洗衣服🧺",
+          "tags": []
+        },
+        {
+          "id": "reply_1108",
+          "text": "在战斗⚔️",
+          "tags": []
+        },
+        {
+          "id": "reply_1109",
+          "text": "在下雨🌧️",
+          "tags": []
+        },
+        {
+          "id": "reply_1110",
+          "text": "出太阳☀️",
+          "tags": []
+        },
+        {
+          "id": "reply_1111",
+          "text": "太阳雨🌦️",
+          "tags": []
+        },
+        {
+          "id": "reply_1112",
+          "text": "在下雪🌨️",
+          "tags": []
+        },
+        {
+          "id": "reply_1113",
+          "text": "大暴雨⛈️",
+          "tags": []
+        },
+        {
+          "id": "reply_1114",
+          "text": "阴天☁️",
+          "tags": []
+        },
+        {
+          "id": "reply_1115",
+          "text": "多云⛅",
+          "tags": []
+        },
+        {
+          "id": "reply_1116",
+          "text": "在打雷🌩️",
+          "tags": []
+        },
+        {
+          "id": "reply_1117",
+          "text": "大雾天🌫️",
+          "tags": []
+        },
+        {
+          "id": "reply_1118",
+          "text": "有彩虹🌈",
+          "tags": []
+        },
+        {
+          "id": "reply_1119",
+          "text": "看电影🎥",
+          "tags": []
+        },
+        {
+          "id": "reply_1120",
+          "text": "玩手机📱",
+          "tags": []
+        },
+        {
+          "id": "reply_1121",
+          "text": "刷视频📱",
+          "tags": []
         }
       ]
     },
@@ -7223,433 +7648,7 @@
     "emoji": {
       "label": "emoji",
       "description": "含系统 emoji 的字卡",
-      "items": [
-        {
-          "id": "reply_0108",
-          "text": "看到记得回复🥲",
-          "tags": []
-        },
-        {
-          "id": "reply_0109",
-          "text": "好的👌🏻",
-          "tags": []
-        },
-        {
-          "id": "reply_0158",
-          "text": "摸摸🫳🏻",
-          "tags": []
-        },
-        {
-          "id": "reply_0279",
-          "text": "期待🤧",
-          "tags": []
-        },
-        {
-          "id": "reply_0280",
-          "text": "抱歉🥺",
-          "tags": []
-        },
-        {
-          "id": "reply_0298",
-          "text": "就这样撒娇🥺",
-          "tags": []
-        },
-        {
-          "id": "reply_0382",
-          "text": "我很想要亲亲欸🥺",
-          "tags": []
-        },
-        {
-          "id": "reply_0399",
-          "text": "来陪你了🥰",
-          "tags": []
-        },
-        {
-          "id": "reply_0410",
-          "text": "永不分离💞",
-          "tags": []
-        },
-        {
-          "id": "reply_0434",
-          "text": "好可爱🥰",
-          "tags": []
-        },
-        {
-          "id": "reply_0436",
-          "text": "想拥抱🫂",
-          "tags": []
-        },
-        {
-          "id": "reply_0445",
-          "text": "我在你身边，你终于发现了。真不容易👏🏻",
-          "tags": []
-        },
-        {
-          "id": "reply_0448",
-          "text": "可爱🥰",
-          "tags": []
-        },
-        {
-          "id": "reply_0469",
-          "text": "没错(#^.^#)👌🏻是我本人",
-          "tags": []
-        },
-        {
-          "id": "reply_0482",
-          "text": "❤️",
-          "tags": []
-        },
-        {
-          "id": "reply_0499",
-          "text": "为什么不能😢",
-          "tags": []
-        },
-        {
-          "id": "reply_0502",
-          "text": "不可以❌",
-          "tags": []
-        },
-        {
-          "id": "reply_0504",
-          "text": "我不同意💔",
-          "tags": []
-        },
-        {
-          "id": "reply_0521",
-          "text": "可能要很久🥲抱歉（30分钟➕）",
-          "tags": []
-        },
-        {
-          "id": "reply_0532",
-          "text": "收到(＾ω＾)👌🏻",
-          "tags": []
-        },
-        {
-          "id": "reply_0537",
-          "text": "找不到字卡了😢",
-          "tags": []
-        },
-        {
-          "id": "reply_0539",
-          "text": "对不起😔",
-          "tags": []
-        },
-        {
-          "id": "reply_0543",
-          "text": "我爱你🥰",
-          "tags": []
-        },
-        {
-          "id": "reply_0556",
-          "text": "还在赖床？……好吧，一起☺️",
-          "tags": []
-        },
-        {
-          "id": "reply_0690",
-          "text": "我在下雨🌧",
-          "tags": []
-        },
-        {
-          "id": "reply_1062",
-          "text": "在出差✈️",
-          "tags": []
-        },
-        {
-          "id": "reply_1063",
-          "text": "在车上🚄",
-          "tags": []
-        },
-        {
-          "id": "reply_1064",
-          "text": "在吃饭🍚",
-          "tags": []
-        },
-        {
-          "id": "reply_1065",
-          "text": "在画画🎨",
-          "tags": []
-        },
-        {
-          "id": "reply_1066",
-          "text": "在洗澡🛁",
-          "tags": []
-        },
-        {
-          "id": "reply_1067",
-          "text": "在烹饪🍳",
-          "tags": []
-        },
-        {
-          "id": "reply_1068",
-          "text": "在工作💼",
-          "tags": []
-        },
-        {
-          "id": "reply_1069",
-          "text": "在开会🖥️",
-          "tags": []
-        },
-        {
-          "id": "reply_1070",
-          "text": "在睡觉💤",
-          "tags": []
-        },
-        {
-          "id": "reply_1071",
-          "text": "在听歌🎶",
-          "tags": []
-        },
-        {
-          "id": "reply_1072",
-          "text": "在车上🚗",
-          "tags": []
-        },
-        {
-          "id": "reply_1073",
-          "text": "在喝水💧",
-          "tags": []
-        },
-        {
-          "id": "reply_1074",
-          "text": "上厕所🚽",
-          "tags": []
-        },
-        {
-          "id": "reply_1075",
-          "text": "在喂小动物🥣",
-          "tags": []
-        },
-        {
-          "id": "reply_1076",
-          "text": "打扫卫生🧹",
-          "tags": []
-        },
-        {
-          "id": "reply_1077",
-          "text": "在拍照📸",
-          "tags": []
-        },
-        {
-          "id": "reply_1078",
-          "text": "打游戏🎮",
-          "tags": []
-        },
-        {
-          "id": "reply_1079",
-          "text": "在发呆💭",
-          "tags": []
-        },
-        {
-          "id": "reply_1080",
-          "text": "在购物🛍️",
-          "tags": []
-        },
-        {
-          "id": "reply_1081",
-          "text": "在游泳🏊🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1082",
-          "text": "在跑步🏃🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1083",
-          "text": "在健身🏋🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1084",
-          "text": "在爬山🧗🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1085",
-          "text": "在滑雪⛷️",
-          "tags": []
-        },
-        {
-          "id": "reply_1086",
-          "text": "在钓鱼🎣",
-          "tags": []
-        },
-        {
-          "id": "reply_1087",
-          "text": "在冥想🧘🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1088",
-          "text": "修理中🔧",
-          "tags": []
-        },
-        {
-          "id": "reply_1089",
-          "text": "在观星🔭",
-          "tags": []
-        },
-        {
-          "id": "reply_1090",
-          "text": "发送传讯/信📩",
-          "tags": []
-        },
-        {
-          "id": "reply_1091",
-          "text": "看医生🩺",
-          "tags": []
-        },
-        {
-          "id": "reply_1092",
-          "text": "在写信/传讯✉️",
-          "tags": []
-        },
-        {
-          "id": "reply_1093",
-          "text": "看电视📺",
-          "tags": []
-        },
-        {
-          "id": "reply_1094",
-          "text": "在唱歌🎤",
-          "tags": []
-        },
-        {
-          "id": "reply_1095",
-          "text": "在演奏乐器🎹",
-          "tags": []
-        },
-        {
-          "id": "reply_1096",
-          "text": "在理发💇🏻‍♂️",
-          "tags": []
-        },
-        {
-          "id": "reply_1097",
-          "text": "在散步👣",
-          "tags": []
-        },
-        {
-          "id": "reply_1098",
-          "text": "在海边🏖️",
-          "tags": []
-        },
-        {
-          "id": "reply_1099",
-          "text": "看日出🌄",
-          "tags": []
-        },
-        {
-          "id": "reply_1100",
-          "text": "看日落🌅",
-          "tags": []
-        },
-        {
-          "id": "reply_1101",
-          "text": "在旅行🏞️",
-          "tags": []
-        },
-        {
-          "id": "reply_1102",
-          "text": "高速上🛣️",
-          "tags": []
-        },
-        {
-          "id": "reply_1103",
-          "text": "在露营🏕️",
-          "tags": []
-        },
-        {
-          "id": "reply_1104",
-          "text": "在酒店🏨",
-          "tags": []
-        },
-        {
-          "id": "reply_1105",
-          "text": "在开车🏍️",
-          "tags": []
-        },
-        {
-          "id": "reply_1106",
-          "text": "坐缆车🚠",
-          "tags": []
-        },
-        {
-          "id": "reply_1107",
-          "text": "在洗衣服🧺",
-          "tags": []
-        },
-        {
-          "id": "reply_1108",
-          "text": "在战斗⚔️",
-          "tags": []
-        },
-        {
-          "id": "reply_1109",
-          "text": "在下雨🌧️",
-          "tags": []
-        },
-        {
-          "id": "reply_1110",
-          "text": "出太阳☀️",
-          "tags": []
-        },
-        {
-          "id": "reply_1111",
-          "text": "太阳雨🌦️",
-          "tags": []
-        },
-        {
-          "id": "reply_1112",
-          "text": "在下雪🌨️",
-          "tags": []
-        },
-        {
-          "id": "reply_1113",
-          "text": "大暴雨⛈️",
-          "tags": []
-        },
-        {
-          "id": "reply_1114",
-          "text": "阴天☁️",
-          "tags": []
-        },
-        {
-          "id": "reply_1115",
-          "text": "多云⛅",
-          "tags": []
-        },
-        {
-          "id": "reply_1116",
-          "text": "在打雷🌩️",
-          "tags": []
-        },
-        {
-          "id": "reply_1117",
-          "text": "大雾天🌫️",
-          "tags": []
-        },
-        {
-          "id": "reply_1118",
-          "text": "有彩虹🌈",
-          "tags": []
-        },
-        {
-          "id": "reply_1119",
-          "text": "看电影🎥",
-          "tags": []
-        },
-        {
-          "id": "reply_1120",
-          "text": "玩手机📱",
-          "tags": []
-        },
-        {
-          "id": "reply_1121",
-          "text": "刷视频📱",
-          "tags": []
-        }
-      ]
+      "items": []
     }
   },
   "generatedBy": "scripts/sync-index.mjs"
