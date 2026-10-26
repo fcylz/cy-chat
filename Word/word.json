@@ -1,8 +1,8 @@
 {
   "name": "cy-chat Word Cards",
-  "version": "2.1.0",
+  "version": "2.2.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-10-23T11:53:07.359Z",
+  "updatedAt": "2026-10-26T08:30:10.518Z",
   "categories": {
     "daily": {
       "label": "日常",
@@ -8930,6 +8930,11 @@
           "tags": []
         }
       ]
+    },
+    "poke": {
+      "label": "拍一拍",
+      "description": "拍一拍的填空短语：抽中后拼成「TA 拍了拍你 …」",
+      "items": []
     },
     "fish": {
       "label": "摸鱼",

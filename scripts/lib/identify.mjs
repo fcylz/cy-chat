@@ -91,6 +91,10 @@ export const WORD_CATEGORIES = {
   sweet: { label: '情话', description: '表白、告白、亲昵话' },
   kaomoji: { label: '颜文字', description: '纯字符拼的表情与装饰符号' },
   emoji: { label: 'emoji', description: '含系统 emoji 的字卡' },
+  // 拍一拍：不是「一句回复」，而是「TA 拍了拍你 ___」的填空。
+  // 客户端抽中后直接拼在拍一拍前缀后面，所以只能放短句（别放整段、别放 emoji 序列）。
+  // mochi 里它是 cc-groups.poke 这个载体分类（与 text 平级），不是功能池。
+  poke: { label: '拍一拍', description: '拍一拍的填空短语：抽中后拼成「TA 拍了拍你 …」' },
 
   // ---- 功能分类（对齐 mochi-x CC_FUNC_KEYS，顺序同 mochi 的 CC_LABEL）----
   fish: { label: '摸鱼', description: '摸鱼浮字与抓包回应：TA 在偷懒 / 抓到摸鱼' },
