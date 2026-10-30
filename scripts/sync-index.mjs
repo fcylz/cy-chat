@@ -122,6 +122,26 @@ function keepTimestampIfUnchanged(file, next) {
 /** 稳定排序，让输出可复现 */
 const byPath = (a, b) => a.localeCompare(b, 'en');
 
+/**
+ * 内容有实质变化才升版本号，没变化就沿用旧值。
+ *
+ * 为什么必须升：客户端（mochi-x 的 cmpVersion）靠 version 在多个 jsDelivr 镜像间
+ * 挑最新；写死常量或永不递增，等于这个字段不存在，择优逻辑永远挑不出东西。
+ * 为什么只升 PATCH：索引内容变化（加条目、改分类）不是破坏性契约变更；
+ * MINOR 留给人工——新增字段、改数据结构时才手动动它。
+ */
+function nextVersion(prevVersion, prev, next, base) {
+  // 只比语义字段：name/description/categories。
+  // 不把 version / updatedAt / generatedBy 算进去，否则每次都会「有变化」。
+  const shape = (o) => (o ? stableStringify({ name: o.name ?? null, description: o.description ?? null, categories: o.categories || {} }) : '');
+  const cur = String(prevVersion ?? '').trim();
+  const valid = /^\d+\.\d+\.\d+$/.test(cur);
+  if (prev && shape(prev) === shape(next)) return valid ? cur : base;
+  if (!valid) return base;
+  const [major, minor, patch] = cur.split('.').map(Number);
+  return `${major}.${minor}.${patch + 1}`;
+}
+
 /* ------------------------------------------------------------------ *
  * Meme：镜像式同步
  * ------------------------------------------------------------------ */
@@ -147,14 +167,45 @@ function syncMeme() {
   const presetKeys = Object.keys(MEME_CATEGORIES);
   report.meme.discovered = validKeys.filter((k) => !presetKeys.includes(k));
 
-  // ---- 2. 建立旧条目索引：basename -> item（url 和 id 都要变，文件名是唯一稳定锚点）
-  const oldByBase = new Map();
+  // ---- 2. 建立旧条目索引
+  // 主键 = 「分类/文件名」相对路径（扩展名不参与，扩展名被规范化时锚点仍成立）。
+  // ⛔ 不能只用 basename 建索引：不同分类下同名但内容不同的文件会被合并成一条，
+  //   ID 张冠李戴；删掉其中一个再同步，剩下那批的 ID 还会整体向后漂。
+  const relKey = (rel) => {
+    const s = String(rel).replace(/^Meme\/images\//i, '');
+    const i = s.lastIndexOf('/');
+    return (i < 0 ? baseName(s) : s.slice(0, i) + '/' + baseName(s.slice(i + 1))).toLowerCase();
+  };
+  const oldByRel = new Map();    // 'reactions/foo' -> item
+  const oldByBase = new Map();   // 'foo' -> item[]（同名可能多条，所以是数组）
+  const oldById = new Map();     // id -> item
   for (const [cat, group] of Object.entries(old.categories || {})) {
     for (const item of group.items || []) {
       if (!item?.url) continue;
-      oldByBase.set(baseName(item.url), { ...item, __oldCat: cat });
+      const rec = { ...item, __oldCat: cat };
+      oldByRel.set(relKey(item.url), rec);
+      oldById.set(item.id, rec);
+      const b = baseName(item.url).toLowerCase();
+      if (!oldByBase.has(b)) oldByBase.set(b, []);
+      oldByBase.get(b).push(rec);
     }
   }
+
+  /**
+   * 把磁盘文件认回旧条目；认不回来（新文件）返回 null。
+   *   ① 路径完全一致（文件没动过）
+   *   ② 文件名在全库唯一（只是搬了分类）
+   *   ③ 文件名在本分类唯一（同名歧义时按分类定夺）
+   * 仍有歧义时宁可发新 ID：猜错一次，就是永久的 ID 张冠李戴。
+   */
+  const resolveOld = (category, srcRel) => {
+    const exact = oldByRel.get(relKey(srcRel));
+    if (exact) return exact;
+    const cands = oldByBase.get(baseName(srcRel).toLowerCase()) || [];
+    if (cands.length === 1) return cands[0];
+    const sameCat = cands.filter((c) => c.__oldCat === category);
+    return sameCat.length === 1 ? sameCat[0] : null;
+  };
 
   const seen = [];          // 识别成功的文件
   for (const rel of relPaths) {
@@ -204,10 +255,10 @@ function syncMeme() {
   for (const group of byHash.values()) {
     if (group.length === 1) { survivors.push(group[0]); continue; }
 
-    // 保留策略：优先已经被索引登记的 -> 优先已在正确分类目录里的 -> 路径字典序
+    // 保留策略：优先已经被索引登记的（且登记路径就是它此刻的路径）-> 优先已在正确分类目录里的 -> 路径字典序
     const ranked = [...group].sort((a, b) => {
-      const aKnown = oldByBase.has(baseName(a.rel)) ? 0 : 1;
-      const bKnown = oldByBase.has(baseName(b.rel)) ? 0 : 1;
+      const aKnown = oldByRel.has(relKey(a.rel)) ? 0 : 1;
+      const bKnown = oldByRel.has(relKey(b.rel)) ? 0 : 1;
       if (aKnown !== bKnown) return aKnown - bKnown;
       const aCat = categoryFromPath(a.rel, validKeys) ? 0 : 1;
       const bCat = categoryFromPath(b.rel, validKeys) ? 0 : 1;
@@ -237,6 +288,9 @@ function syncMeme() {
       category = OPT.defaultCategory;
       looseFiles.push(f.rel);
     }
+
+    // 认回旧条目（ID / name / tags 都来自它）；认不回来就是新文件
+    f.__old = resolveOld(category, f.rel);
 
     // 目标文件名：只有扩展名与真实类型真正对不上时才规范化
     const wantExt = EXT_BY_TYPE[f.type];
@@ -276,12 +330,16 @@ function syncMeme() {
   }
 
   // ---- 5. 分配 ID（老条目沿用原 ID，新条目续号）
-  let maxNum = 0;
-  for (const it of oldByBase.values()) maxNum = Math.max(maxNum, idNumber(it.id));
+  // maxNum 取「旧索引的全部条目 + 旧索引记下的高水位线」，保证新 ID 永远大于发出去过的 ID。
+  // 只看现存条目的话，删掉当前最大号那条之后，新文件就会把它的号回收过来 ——
+  // 客户端手里还留着旧引用，一回收就是「新图顶替旧 ID」。
+  const highWater = Number(old.idSeq) || 0;
+  let maxNum = highWater;
+  for (const it of oldById.values()) maxNum = Math.max(maxNum, idNumber(it.id));
 
   const inUse = new Set();
   for (const p of planned) {
-    const oldItem = oldByBase.get(baseName(p.rel)) || oldByBase.get(baseName(p.file));
+    const oldItem = p.__old;
     if (oldItem?.id && !inUse.has(oldItem.id)) {
       p.id = oldItem.id;
       inUse.add(oldItem.id);
@@ -308,7 +366,7 @@ function syncMeme() {
   }
 
   for (const p of planned.sort((a, b) => idNumber(a.id) - idNumber(b.id))) {
-    const oldItem = oldByBase.get(baseName(p.rel)) || oldByBase.get(baseName(p.file));
+    const oldItem = p.__old;
     const item = {
       id: p.id,
       name: oldItem?.name || baseName(p.file),
@@ -321,7 +379,7 @@ function syncMeme() {
     item.format = p.type;
     categories[p.category].items.push(item);
   }
-  report.meme.kept = planned.filter((p) => oldByBase.has(baseName(p.rel))).length;
+  report.meme.kept = planned.filter((p) => p.__old).length;
   report.meme.added = planned.length - report.meme.kept;
 
   // 镜像语义收尾：目录没了、条目也空了的「动态分类」直接清掉，避免拼错一次就永久留在索引里。
@@ -336,11 +394,11 @@ function syncMeme() {
   }
   report.meme.discovered = Object.keys(categories).filter((k) => !presetKeys.includes(k));
 
-  // ---- 7. 孤儿条目（索引里有、磁盘上没有）
+  // ---- 7. 孤儿条目（索引里有、磁盘上没有被复用的）
+  // 判据是「这个旧 ID 有没有被新索引重新用上」——按 basename 判会把「同名但另一条已删」漏掉。
   const droppedRel = new Set(report.meme.duplicates.flatMap((d) => d.dropped));
-  const aliveBase = new Set(planned.map((p) => baseName(p.file)));
-  for (const [base, item] of oldByBase) {
-    if (aliveBase.has(base)) continue;
+  for (const item of oldById.values()) {
+    if (inUse.has(item.id)) continue;
     report.meme.removedOrphans++;
     const rel = String(item.url).replace(/^Meme\/images\//, '');
     const why = droppedRel.has(rel) ? '对应文件因内容重复已被删除' : '对应文件在磁盘上不存在';
@@ -349,12 +407,15 @@ function syncMeme() {
 
   const next = {
     name: old.name || 'cy-chat Meme Pack',
-    version: '2.0.0',
+    version: null,
     description: old.description || '表情包云端数据 - 图片表情 & 贴图',
     updatedAt: new Date().toISOString(),
     generatedBy: 'scripts/sync-index.mjs',
     categories,
+    idSeq: maxNum,   // 高水位线：删除条目后也不回收 ID
   };
+  // 内容有变才升 PATCH，没变就原样保留（写死的常量等于没有版本号，客户端无从择优）
+  next.version = nextVersion(old.version, old, next, '2.0.0');
 
   return { planned, next, old };
 }
@@ -473,7 +534,7 @@ function syncWord() {
   // 编号跨全部分类取最大值再递增，不按分类各算各的 —— 否则七个分类各自从自己的
   // 最大值往后排，会产出重复的数字（daily_1286 和 reply_1286 指向两条不同字卡）。
   const prefixByCat = wordIdPrefixes(liveKeys);
-  let nextNum = 0;
+  let nextNum = Number(old.idSeq) || 0;
   for (const cat of liveKeys) {
     for (const it of categories[cat].items) nextNum = Math.max(nextNum, idNumber(it.id));
   }
@@ -486,17 +547,18 @@ function syncWord() {
     report.word.added++;
   }
 
-  return {
-    next: {
-      ...old,
-      version: old.version || '1.0.0',
-      updatedAt: new Date().toISOString(),
-      generatedBy: 'scripts/sync-index.mjs',
-      categories,
-    },
-    old,
-    files,
+  const next = {
+    ...old,
+    version: old.version || '1.0.0',
+    updatedAt: new Date().toISOString(),
+    generatedBy: 'scripts/sync-index.mjs',
+    categories,
+    idSeq: nextNum,   // 高水位线：动态分类被回收后也不回收 ID
   };
+  // 字卡侧同理：客户端要拿 word.json 的 version 在多镜像间判新旧，永不递增等于失效
+  next.version = nextVersion(old.version, old, next, '1.0.0');
+
+  return { next, old, files };
 }
 
 /* ------------------------------------------------------------------ *
