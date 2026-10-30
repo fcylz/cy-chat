@@ -2,7 +2,7 @@
   "name": "cy-chat Word Cards",
   "version": "2.2.0",
   "description": "字卡云端数据 - 自定义回复 & 互动内容",
-  "updatedAt": "2026-10-30T14:46:21.181Z",
+  "updatedAt": "2026-10-30T14:47:02.630Z",
   "categories": {
     "daily": {
       "label": "日常",
@@ -7022,6 +7022,16 @@
         {
           "id": "reply_2007",
           "text": "核对一番讯息。",
+          "tags": []
+        },
+        {
+          "id": "reply_2125",
+          "text": "方才心神恍惚，一时没能回应。",
+          "tags": []
+        },
+        {
+          "id": "reply_2126",
+          "text": "思绪飘得太远，方才回过神来。",
           "tags": []
         }
       ]
