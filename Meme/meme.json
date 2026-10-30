@@ -2,7 +2,7 @@
   "name": "cy-chat Meme Pack",
   "version": "2.0.0",
   "description": "表情包云端数据 - 图片表情 & 贴图",
-  "updatedAt": "2026-09-24T19:10:15.963Z",
+  "updatedAt": "2026-10-30T16:20:33.089Z",
   "generatedBy": "scripts/sync-index.mjs",
   "categories": {
     "reactions": {
@@ -806,5 +806,6 @@
       "description": "装饰性贴图",
       "items": []
     }
-  }
+  },
+  "idSeq": 79
 }
