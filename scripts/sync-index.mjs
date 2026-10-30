@@ -77,6 +77,7 @@ const MEME_JSON = path.join(OPT.root, 'Meme/meme.json');
 const WORD_JSON = path.join(OPT.root, 'Word/word.json');
 const IMAGES_DIR = path.join(OPT.root, 'Meme/images');
 const WORDS_DIR = path.join(OPT.root, 'Word/words');
+const LATEST_JSON = path.join(OPT.root, 'latest.json');
 
 function loadJson(file) {
   if (!fs.existsSync(file)) return null;
@@ -117,6 +118,34 @@ function keepTimestampIfUnchanged(file, next) {
   const b = stableStringify({ ...next, updatedAt: null });
   if (a === b && prev.updatedAt) next.updatedAt = prev.updatedAt;
   return next;
+}
+
+/**
+ * latest.json：给客户端用的「版本探针」。
+ *
+ * 为什么需要它：jsDelivr 的 @main 是「分支」型引用，边缘缓存 s-maxage 是 12 小时，
+ * 仓库更新后客户端可能半天拉到的还是旧快照；更麻烦的是旧快照的 version 可能与最新
+ * 那份**完全相同**（改造前 version 从不自增），只比 version 根本区分不出来。
+ * 这张小清单放在仓库根，raw.githubusercontent.com 缓存约 5 分钟、开放 CORS，
+ * 客户端先取它拿到权威的 version / 条目数 / 字节数 / SHA1，再决定用哪份大 JSON。
+ *
+ * ⛔ 不写 commit SHA：同一提交里无法写下自己的 SHA（自指），提交后 SHA 又变了，
+ *    写进去只会永远过期。客户端要校验内容就用这里的 sha1，要新鲜就直接读 raw JSON。
+ */
+function describeIndex(file, data) {
+  const buf = fs.readFileSync(file);
+  const items = Object.values(data.categories || {})
+    .reduce((n, g) => n + (g.items?.length || 0), 0);
+  return { version: String(data.version || ''), items, bytes: buf.length, sha1: sha1(buf) };
+}
+
+function buildLatest(meme, word) {
+  return {
+    schema: 1,
+    updatedAt: new Date().toISOString(),
+    word: { url: 'Word/word.json', ...describeIndex(WORD_JSON, word) },
+    meme: { url: 'Meme/meme.json', ...describeIndex(MEME_JSON, meme) },
+  };
 }
 
 /** 稳定排序，让输出可复现 */
@@ -594,6 +623,11 @@ function main() {
     keepTimestampIfUnchanged(WORD_JSON, word.next);
     saveJson(MEME_JSON, meme.next);
     saveJson(WORD_JSON, word.next);
+
+    // 版本探针最后写：sha1 / bytes 必须对着已落盘的 JSON 算（内容没变时 updatedAt 沿用旧值，
+    // 整份文件字节不变，git 不会产生空提交）
+    const latest = keepTimestampIfUnchanged(LATEST_JSON, buildLatest(meme.next, word.next));
+    saveJson(LATEST_JSON, latest);
   }
 
   // ---- 报告
